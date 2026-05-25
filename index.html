@@ -1,0 +1,198 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home – E-HAW | Barangay Kamputhaw</title>
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/about.css" />
+</head>
+<body>
+
+  <!-- =============================================
+       NAVIGATION
+  ============================================= -->
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img src="images/7.png" alt="E-HAW Logo" />
+      <span class="nav-brand-text">E-HAW</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="report.html">Report</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li>
+        <a href="#" class="nav-profile-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+               stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Profile
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+               stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </a>
+        <div class="nav-dropdown">
+          <a href="login.html">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                 stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Log Out
+          </a>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Mobile hamburger -->
+    <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="report.html">Report</a>
+    <a href="#about">About Us</a>
+    <a href="profile.html">Profile</a>
+    <a href="login.html" class="mobile-logout">Log Out</a>
+  </div>
+
+  <!-- =============================================
+       HERO SECTION
+  ============================================= -->
+  <section class="hero">
+    <img class="hero-bg" src="images/signup_bg.png" alt="Aerial view of Barangay Kamputhaw" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>E-System for Harmonizing Actions and Welfare</h1>
+      <p>is a web-based reporting platform for Barangay Camputhaw, Cebu City. It enables residents and officials to digitally report community issues, ranging from environmental hazards like illegal dumping to public safety concerns.</p>
+    </div>
+  </section>
+
+  <!-- =============================================
+       CTA SECTION
+  ============================================= -->
+  <section class="cta-section">
+    <a href="report.html" class="btn-cta">Create Report</a>
+    <p class="cta-stats">50+ Issues Resolved &nbsp;|&nbsp; 10-Minute Average Report Time &nbsp;|&nbsp; 24/7 Monitoring</p>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- =============================================
+       HOW IT WORKS SECTION
+  ============================================= -->
+  <section class="how-section">
+    <h2>How It Works</h2>
+    <div class="how-cards">
+
+      <div class="how-card">
+        <p class="how-card-title">Step 1: Capture</p>
+        <img class="how-card-icon" src="images/8.png" alt="Camera icon" />
+        <p class="how-card-desc">Take a photo or describe the issue.</p>
+      </div>
+
+      <div class="how-card">
+        <p class="how-card-title">Step 2: Submit</p>
+        <img class="how-card-icon" src="images/10.png" alt="Submit icon" />
+        <p class="how-card-desc">Create a message stating your concern and send it via the portal.</p>
+      </div>
+
+      <div class="how-card">
+        <p class="how-card-title">Step 3: Resolve</p>
+        <img class="how-card-icon" src="images/9.png" alt="Gear and wrench icon" />
+        <p class="how-card-desc">Barangay officials review the report and take the necessary actions.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       CAROUSEL GALLERY SECTION
+  ============================================= -->
+  <section class="carousel-section">
+
+    <h2>Gallery</h2>
+
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev" onclick="moveSlide(-1)">❮</button>
+
+      <div class="carousel-track" id="carouselTrack">
+        <img src="images/2.2.png" alt="" class="clone">
+       
+        <img src="images/2.png" alt="">
+        <img src="images/pic2.jpg" alt="">
+        <img src="images/pic3.jpg" alt="">
+        <img src="images/pic4.jpg" alt="">
+        <img src="images/pic5.jpg" alt="">
+
+        <img src="images/1.png" alt="" class="clone">
+
+      </div>
+
+      <button class="carousel-btn next" onclick="moveSlide(1)">❯</button>
+      
+      <!-- DOTS (BOTTOM INSIDE SECTION) -->
+      <div class="carousel-dots" id="carouselDots">
+        <span onclick="goToSlide(0)"></span>
+        <span onclick="goToSlide(1)"></span>
+        <span onclick="goToSlide(2)"></span>
+        <span onclick="goToSlide(3)"></span>
+        <span onclick="goToSlide(4)"></span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       ABOUT US SECTION
+  ============================================= -->
+  <section id="about">
+    <div class="page">
+
+      <!-- LEFT: Light green header panel + TITLE -->
+      <div class="about-hero">
+        <h1>About Us</h1>
+        <img src="images/insertpic.jpg" alt="*no pic yet"
+            style="width:100%; border-radius:18px; margin-bottom:20px;">
+      </div>
+
+      <!-- RIGHT / MAIN: Dark green content card -->
+      <div class="about-card">
+        <p>
+          Project E-HAW (E-System for Harmonizing Actions and Welfare) is developed to bridge this gap by providing a digital platform that prioritizes efficiency, confidentiality, and accountability. Project E-HAW is a web-based reporting system specifically designed for the residents and officials of Barangay Kamputhaw, Cebu City. This platform serves as a digital bridge that allows citizens to report community issues that range from environmental hazards, like illegal dumping, to public safety concerns, such as drug-related activities.
+        </p>
+        <p>
+          Current reporting methods in the barangay often rely on physical presence at the hall or informal messages that eventually get lost in the shuffle. This presents problems, such as residents will find the reporting process tedious, since it often requires lengthy explanations or face-to-face interviews, and the fear of retaliation prevents them from reporting crimes or social issues. Without a guaranteed confidential channel, critical problems go unaddressed.
+        </p>
+        <p>
+          Project E-HAW revolutionizes the 'sumbong' culture by focusing on a 'capture and send' methodology. By integrating GPS auto-tagging and categorized photo uploads, the system reduces the reporting process to just a few taps. This ensures that the Barangay Hall receives high-quality, actionable information (photos and exact locations) without the resident needing to write long essays.
+        </p>
+        <p>
+          Beyond its technological features, Project E-HAW is built for the local context. The name reflects a commitment to address the systemic problems of the community through modern intervention. It is a tool for transparency, accountability, and a cleaner, safer Kamputhaw.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    E-HAW 2026 &nbsp;•&nbsp; A Dedicated NSTP Project for Barangay Kamputhaw
+  </footer>
+
+  <script src="js/home.js"></script>
+</body>
+</html>

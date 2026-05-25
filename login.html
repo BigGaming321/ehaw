@@ -1,0 +1,86 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login – E-HAW | Barangay Kamputhaw</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+  <div class="page">
+
+    <!-- FIXED BACKGROUND -->
+    <div class="hero">
+      <img class="bg-photo" src="images/signup_bg.png" alt="Aerial view of Barangay Kamputhaw" />
+    </div>
+
+    <!-- HERO TEXT + LOGO (above card on mobile, left panel on desktop) -->
+    <div class="hero-content">
+      <h2 class="hero-title">E-HAW</h2>
+      <p class="hero-subtitle">E-system for Harmonizing Actions and Welfare</p>
+      <img class="hero-logo" src="images/logo_white.png" alt="Barangay Kamputhaw Logo" />
+    </div>
+
+    <!-- LOGIN CARD -->
+    <div class="card">
+      <a class="back-link" onclick="history.back()" href="signup.html">
+        <!-- left arrow -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+             stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Back
+      </a>
+
+      <h1>Login</h1>
+
+      <div class="login-form" id="loginForm">
+
+        <!-- Email -->
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <polyline points="2,4 12,13 22,4"/>
+            </svg>
+          </span>
+          <input type="email" id="email" placeholder="Email" autocomplete="email" />
+        </div>
+
+        <!-- Password -->
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </span>
+          <input type="password" id="password" placeholder="Password" autocomplete="current-password" />
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="forgot-link">
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        <button class="btn-login" type="button" id="loginBtn">Log in</button>
+
+      </div><!-- /.login-form -->
+
+      <p class="footer-note">
+        E-HAW 2026 &nbsp;•&nbsp; A Dedicated NSTP Project for <a href="#">Barangay Kamputhaw</a>
+      </p>
+    </div><!-- /.card -->
+
+  </div><!-- /.page -->
+
+  <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-HAW Panel — Accounts</title>
+  <link rel="stylesheet" href="css/accounts.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- ═══════════════ SIDEBAR ═══════════════ -->
+  <aside class="sidebar" role="navigation" aria-label="Main Navigation">
+
+    <div class="sidebar__logo" title="E-HAW Panel Home">
+      <img src="images/7.png" alt="E-HAW Logo" class="logo-icon" />
+    </div>
+
+    <nav class="sidebar__nav">
+
+      <!-- Home -->
+      <a href="index.html" class="sidebar__nav-item" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </a>
+
+      <!-- Reports -->
+      <a href="reports.html" class="sidebar__nav-item" aria-label="Reports" title="Reports">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="4" y="3" width="12" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 8H12M8 12H14M8 16H11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M14 3V7H20" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M14 3L20 9V19H16" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <!-- Accounts (active) -->
+      <a href="accounts.html" class="sidebar__nav-item active" aria-label="Accounts" title="Accounts">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="8" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+          <path d="M2 21C2 17.134 4.686 14 8 14H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M17 14L19 16L23 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+    </nav>
+
+    <div class="sidebar__footer">
+      <button class="sidebar__nav-item sidebar__logout" aria-label="Logout" title="Logout" id="sidebarLogout">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="16 17 21 12 16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ═══════════════ MAIN WRAPPER ═══════════════ -->
+  <div class="main-wrapper">
+
+    <div class="bg-overlay" aria-hidden="true"></div>
+
+    <!-- TOP NAVBAR -->
+    <header class="topbar" role="banner">
+      <a href="index.html" class="topbar__brand" aria-label="Go to E-HAW homepage">
+        <span class="topbar__brand-text">E-HAW PANEL</span>
+      </a>
+
+      <div class="topbar__user" id="userMenu" role="button" tabindex="0"
+           aria-haspopup="true" aria-expanded="false" aria-label="User menu">
+        <span class="topbar__username">Hi! <strong>JuneGooner67</strong></span>
+        <div class="topbar__avatar" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+            <path d="M4 20C4 16.686 7.582 14 12 14C16.418 14 20 16.686 20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="topbar__dropdown" id="userDropdown" role="menu" aria-label="User options">
+          <button class="topbar__dropdown-item" role="menuitem" tabindex="-1" id="logoutBtn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M9 21H5C4.47 21 3.96 20.79 3.59 20.41C3.21 20.04 3 19.53 3 19V5C3 4.47 3.21 3.96 3.59 3.59C3.96 3.21 4.47 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="16 17 21 12 16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content" role="main">
+
+      <section class="section" aria-labelledby="accounts-heading">
+        <div class="section__header">
+          <h2 class="section__title" id="accounts-heading">
+            Account List
+            <svg class="section__title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                 aria-hidden="true" style="width:18px;height:18px;color:var(--text-muted)">
+              <path d="M3 6H21M3 12H15M3 18H9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M17 9l4 3-4 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </h2>
+          <button class="section__action-btn" title="Export" aria-label="Export account list">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="7 10 12 15 17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="table-card" role="region" aria-label="Account Table">
+          <table class="report-table" aria-label="List of user accounts">
+            <thead>
+              <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">No. of Reports</th>
+              </tr>
+            </thead>
+            <tbody id="accountTableBody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="js/accounts.js"></script>
+</body>
+</html>

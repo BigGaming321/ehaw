@@ -1,0 +1,357 @@
+/* css/login.css */
+/* =============================================
+   CSS VARIABLES & RESET
+============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green-dark:    #2e7d5e;
+  --green-mid:     #3a9970;
+  --green-btn:     #3d8c6e;
+  --green-light:   #b2dbc8;
+  --green-pale:    #d4ede2;
+  --green-bg:      #cde8d8;
+  --green-sheet:   #c8e6d4;
+  --text-dark:     #1a4d35;
+  --text-muted:    #6aab8a;
+  --text-body:     #2d6b4e;
+  --white:         #ffffff;
+  --radius-input:  50px;
+  --radius-card:   32px;
+  --font-main:     'Nunito', sans-serif;
+  --font-body:     'Nunito Sans', sans-serif;
+  --font-display:  'Playfair Display', serif;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: var(--font-main);
+  background: #b2dbc8;
+  overflow-x: hidden;
+}
+
+/* =============================================
+   PAGE WRAPPER
+============================================= */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+
+/* =============================================
+   HERO / BACKGROUND IMAGE
+============================================= */
+.hero {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero img.bg-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  display: block;
+}
+
+/* dark overlay */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 30, 18, .55);
+  pointer-events: none;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--green-dark);
+  font-size: .95rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 28px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.back-link:hover { opacity: .7; }
+.back-link svg { flex-shrink: 0; }
+
+
+/* =============================================
+   HERO TEXT CONTENT (E-HAW title + subtitle + logo)
+============================================= */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  padding: 48px 24px 32px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 22vw, 270px);
+  font-weight: 900;
+  color: var(--white);
+  line-height: .9;
+  letter-spacing: -2px;
+  text-shadow: 0 4px 40px rgba(0,0,0,.3);
+  animation: fadeDown .6s cubic-bezier(.22,.8,.32,1) both;
+}
+
+.hero-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(13px, 3.5vw, 34.1px);
+  font-weight: 700;
+  color: var(--white);
+  margin-top: 10px;
+  letter-spacing: .3px;
+  text-shadow: 0 2px 12px rgba(0,0,0,.4);
+  animation: fadeDown .7s .08s cubic-bezier(.22,.8,.32,1) both;
+}
+
+.hero-logo {
+  margin-top: 32px;
+  width: clamp(48px, 10vw, 72px);
+  height: clamp(48px, 10vw, 72px);
+  object-fit: contain;
+  filter: invert(1);
+  animation: fadeDown .8s .16s cubic-bezier(.22,.8,.32,1) both;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================
+   CARD SHEET
+============================================= */
+.card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  background: var(--green-sheet);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  padding: 40px 32px 40px;
+  box-shadow: 0 -8px 48px rgba(0,0,0,.20);
+  animation: slideUp .5s .1s cubic-bezier(.22,.8,.32,1) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================
+   HEADING
+============================================= */
+.card h1 {
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  font-weight: 900;
+  color: var(--green-dark);
+  line-height: 1.05;
+  margin-bottom: 32px;
+  letter-spacing: -.5px;
+}
+
+/* =============================================
+   FORM
+============================================= */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 20px;
+  color: var(--green-light);
+  pointer-events: none;
+  transition: color .2s;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper:focus-within .input-icon {
+  color: var(--green-mid);
+}
+
+.login-form input {
+  width: 100%;
+  padding: 18px 20px 18px 52px;
+  border: none;
+  border-radius: var(--radius-input);
+  background: rgba(255,255,255,.78);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  outline: none;
+  transition: background .2s, box-shadow .2s;
+  box-shadow: 0 2px 8px rgba(46,125,94,.06);
+  -webkit-appearance: none;
+}
+
+.login-form input::placeholder {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.login-form input:focus {
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(58,153,112,.25), 0 2px 8px rgba(46,125,94,.08);
+}
+
+/* =============================================
+   FORGOT PASSWORD
+============================================= */
+.forgot-link {
+  text-align: right;
+  margin-top: 2px;
+}
+
+.forgot-link a {
+  color: var(--green-dark);
+  font-size: .9rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: opacity .2s;
+}
+.forgot-link a:hover { opacity: .7; }
+
+/* =============================================
+   LOGIN BUTTON
+============================================= */
+.btn-login {
+  margin-top: 20px;
+  width: 100%;
+  padding: 20px;
+  border: none;
+  border-radius: var(--radius-input);
+  background: var(--green-btn);
+  color: var(--white);
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: .3px;
+  cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 18px rgba(46,125,94,.35);
+}
+
+.btn-login:hover {
+  background: var(--green-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(46,125,94,.4);
+}
+
+.btn-login:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(46,125,94,.25);
+}
+
+/* =============================================
+   FOOTER NOTE
+============================================= */
+.footer-note {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: .72rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.footer-note a {
+  color: var(--text-muted);
+  font-weight: 700;
+  text-decoration: none;
+}
+.footer-note a:hover { text-decoration: underline; }
+
+/* =============================================
+   RESPONSIVE — TABLET
+============================================= */
+@media (min-width: 540px) {
+  .page {
+    align-items: center;
+  }
+
+  .card {
+    max-width: 520px;
+    border-radius: var(--radius-card);
+    margin: 0 16px 40px;
+    padding: 44px 48px 52px;
+  }
+
+  .hero-content {
+    max-width: 520px;
+    padding-bottom: 24px;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — DESKTOP
+============================================= */
+@media (min-width: 960px) {
+  .page {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  /* left panel: hero text */
+  .hero-content {
+    flex: 1;
+    max-width: none;
+    justify-content: center;
+    padding: 60px 60px 60px 80px;
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  /* right panel: card */
+  .card {
+    width: 460px;
+    max-width: 460px;
+    flex-shrink: 0;
+    border-radius: 0;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 52px;
+    box-shadow: -8px 0 40px rgba(0,0,0,.15);
+    overflow-y: auto;
+  }
+
+  .footer-note {
+    margin-top: auto;
+    padding-top: 40px;
+  }
+}
