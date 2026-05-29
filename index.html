@@ -7,6 +7,10 @@
   <title>Home – E-HAW | Barangay Kamputhaw</title>
   <link rel="stylesheet" href="css/home.css" />
   <link rel="stylesheet" href="css/about.css" />
+  
+      <!-- dave -->
+  <link rel="stylesheet" href="css/review.css" />
+  
 </head>
 <body>
 
@@ -188,11 +192,44 @@
     </div>
   </section>
 
+  <!-- =============================================
+       REVIEW SECTION
+  ============================================= -->
+  <section class="review-section">
+    <div class="review-container">
+      <h2>Rate Your Experience</h2>
+      <p>Help us improve Project E-HAW. How would you rate the system's usability and responsiveness?</p>
+      
+      <div class="star-rating" role="group" aria-label="Rate your experience from 1 to 5 stars">
+        <span class="star" data-value="1" role="button" tabindex="0" aria-label="1 star">&#9733;</span>
+        <span class="star" data-value="2" role="button" tabindex="0" aria-label="2 stars">&#9733;</span>
+        <span class="star" data-value="3" role="button" tabindex="0" aria-label="3 stars">&#9733;</span>
+        <span class="star" data-value="4" role="button" tabindex="0" aria-label="4 stars">&#9733;</span>
+        <span class="star" data-value="5" role="button" tabindex="0" aria-label="5 stars">&#9733;</span>
+      </div>
+      
+      <input type="hidden" id="selected-rating" value="0">
+
+      <div class="review-description">
+        <label for="review-text">Leave a description:</label>
+        <textarea id="review-text" placeholder="Tell us more about your experience or suggestions..." maxlength="500"></textarea>
+        <span class="char-count"><span id="char-used">0</span>/500</span>
+      </div>
+
+      <button type="button" id="submit-review-btn">Submit Feedback</button>
+      <p id="review-message" class="review-msg-hidden"></p>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="page-footer">
     E-HAW 2026 &nbsp;•&nbsp; A Dedicated NSTP Project for Barangay Kamputhaw
   </footer>
 
   <script src="js/home.js"></script>
+  
+    <!-- dave -->
+  <script src="js/review.js"></script>
+  
 </body>
 </html>
