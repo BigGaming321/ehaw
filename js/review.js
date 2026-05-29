@@ -1,4 +1,3 @@
-// Review System JavaScript
 document.addEventListener('DOMContentLoaded', function() {
   const stars = document.querySelectorAll('.star');
   const ratingInput = document.getElementById('selected-rating');
@@ -33,10 +32,13 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Reset star highlight on mouse leave
-  document.querySelector('.star-rating').addEventListener('mouseleave', function() {
-    const currentRating = ratingInput.value;
-    updateStars(currentRating);
-  });
+  const starRatingContainer = document.querySelector('.star-rating');
+  if (starRatingContainer) {
+    starRatingContainer.addEventListener('mouseleave', function() {
+      const currentRating = ratingInput.value;
+      updateStars(currentRating);
+    });
+  }
 
   function updateStars(rating) {
     stars.forEach(star => {
@@ -61,12 +63,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Character counter
-  textarea.addEventListener('input', function() {
-    charUsed.textContent = this.value.length;
-  });
+  if (textarea && charUsed) {
+    textarea.addEventListener('input', function() {
+      charUsed.textContent = this.value.length;
+    });
+  }
 
   // Submit button functionality
-  submitBtn.addEventListener('click', submitReview);
+  if (submitBtn) {
+    submitBtn.addEventListener('click', submitReview);
+  }
 
   function submitReview() {
     const rating = ratingInput.value;
@@ -88,48 +94,30 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Disable button while submitting
     submitBtn.disabled = true;
     submitBtn.textContent = 'Submitting...';
 
-    // Send review to backend
     const reviewData = {
       rating: parseInt(rating),
       description: description,
       timestamp: new Date().toISOString()
     };
 
-    // Option 1: Send to a backend API (uncomment and adjust endpoint)
-    fetch('/api/reviews', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(reviewData)
-    })
-    .then(response => response.json())
-    .then(data => {
+    // Storing locally in the browser since there is no backend API server
+    try {
+      const reviews = JSON.parse(localStorage.getItem('e-haw-reviews') || '[]');
+      reviews.push(reviewData);
+      localStorage.setItem('e-haw-reviews', JSON.stringify(reviews));
+
       showMessage('Thank you! Your feedback has been submitted successfully.', 'success');
       resetForm();
-    })
-    .catch(error => {
-      // If API fails, store locally
-      console.warn('API error, storing locally:', error);
-      storeReviewLocally(reviewData);
-      showMessage('Thank you! Your feedback has been submitted.', 'success');
-      resetForm();
-    })
-    .finally(() => {
+    } catch (error) {
+      console.error('Storage error:', error);
+      showMessage('Something went wrong. Please try again.', 'error');
+    } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Submit Feedback';
-    });
-  }
-
-  function storeReviewLocally(data) {
-    // Store reviews in localStorage as backup
-    const reviews = JSON.parse(localStorage.getItem('e-haw-reviews') || '[]');
-    reviews.push(data);
-    localStorage.setItem('e-haw-reviews', JSON.stringify(reviews));
+    }
   }
 
   function showMessage(message, type) {
@@ -137,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function() {
     reviewMessage.classList.remove('review-msg-hidden', 'review-msg-success', 'review-msg-error');
     reviewMessage.classList.add(type === 'success' ? 'review-msg-success' : 'review-msg-error');
 
-    // Auto-hide success message after 5 seconds
     if (type === 'success') {
       setTimeout(() => {
         reviewMessage.classList.add('review-msg-hidden');
@@ -152,10 +139,12 @@ document.addEventListener('DOMContentLoaded', function() {
     stars.forEach(star => star.classList.remove('active'));
   }
 
-  // Allow Enter key for submission (Ctrl+Enter)
-  textarea.addEventListener('keydown', function(e) {
-    if (e.ctrlKey && e.key === 'Enter') {
-      submitReview();
-    }
-  });
+  // Allow Ctrl+Enter shortcut for submission
+  if (textarea) {
+    textarea.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.key === 'Enter') {
+        submitReview();
+      }
+    });
+  }
 });
