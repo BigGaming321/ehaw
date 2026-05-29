@@ -1,7 +1,7 @@
 /* Review Section Styles */
 .review-section {
   padding: 60px 20px;
-  background: linear-gradient(135deg, #f5f5f5 0%, #e8f4f1 100%);
+  background: linear-gradient(135deg, var(--green-bg) 0%, var(--green-pale) 100%);
   text-align: center;
 }
 
@@ -16,7 +16,7 @@
 
 .review-container h2 {
   font-size: 28px;
-  color: #2d5a54;
+  color: var(--green-dark);
   margin-bottom: 10px;
   font-weight: 700;
 }
@@ -59,7 +59,7 @@
 .review-description label {
   display: block;
   font-weight: 600;
-  color: #2d5a54;
+  color: var(--green-dark);
   margin-bottom: 10px;
 }
 
@@ -77,7 +77,7 @@
 
 .review-description textarea:focus {
   outline: none;
-  border-color: #2d5a54;
+  border-color: var(--green-dark);
 }
 
 .char-count {
@@ -90,7 +90,7 @@
 
 /* Submit Button */
 #submit-review-btn {
-  background: #2d5a54;
+  background: var(--green-dark);
   color: white;
   padding: 12px 40px;
   border: none;
@@ -104,7 +104,7 @@
 }
 
 #submit-review-btn:hover {
-  background: #1f4038;
+  background: var(--green-btn);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -145,28 +145,10 @@
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-  .review-section {
-    padding: 40px 15px;
-  }
-
-  .review-container {
-    padding: 25px;
-  }
-
-  .review-container h2 {
-    font-size: 22px;
-  }
-
-  .star-rating {
-    gap: 10px;
-  }
-
-  .star {
-    font-size: 32px;
-  }
-
-  .review-description textarea {
-    min-height: 80px;
-    font-size: 16px; /* Prevents zoom on iOS */
-  }
+  .review-section { padding: 40px 15px; }
+  .review-container { padding: 25px; }
+  .review-container h2 { font-size: 22px; }
+  .star-rating { gap: 10px; }
+  .star { font-size: 32px; }
+  .review-description textarea { min-height: 80px; font-size: 16px; }
 }
