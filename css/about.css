@@ -211,8 +211,26 @@ html, body {
    ABOUT HERO (light green header area)
 ============================================= */
 .about-hero {
-  padding: 52px 32px 32px;
-  background: var(--green-pale);
+  padding: 45px 32px 32px;
+  background-image: url("/images/otherBG.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(154, 219, 241, 0.79);
+  z-index: 0;
+}
+
+.about-hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .about-hero h1 {
@@ -227,7 +245,7 @@ html, body {
    ABOUT CARD (dark green rounded card)
 ============================================= */
 .about-card {
-  background: var(--green-dark);
+  background: #6a9139;
   border-radius: 28px;
   margin: 0 20px 32px;
   padding: 36px 28px;
@@ -235,6 +253,32 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+@media (max-width: 640px) {
+
+  #about {
+    position: relative;
+
+    background-image: url("/images/otherBG.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  #about::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(154, 219, 241, 0.79);
+    z-index: 0;
+  }
+
+  #about > * {
+    position: relative;
+    z-index: 1;
+  }
+
 }
 
 .about-card p {
