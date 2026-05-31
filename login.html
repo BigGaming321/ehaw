@@ -16,13 +16,14 @@
       <img class="bg-photo" src="images/signup_bg.png" alt="Aerial view of Barangay Kamputhaw" />
     </div>
 
-    <!-- HERO TEXT + LOGO (above card on mobile, left panel on desktop) -->
+    <!-- HERO LOGO (above card on mobile, left panel on desktop) -->
     <div class="hero-content">
-      <h2 class="hero-title">E-HAW</h2>
-      <p class="hero-subtitle">E-system for Harmonizing Actions and Welfare</p>
-      <img class="hero-logo" src="images/logo_white.png" alt="Barangay Kamputhaw Logo" />
-    </div>
-
+      <div class="logo-wrapper">
+        <img class="hero-logo" src="images/logo_graphic.png" alt="Project E-HAW Logo" />
+      </div>
+        <p class="hero-subtitle">E-system for Harmonizing Actions and Welfare</p>
+    </div>   
+    
     <!-- LOGIN CARD -->
     <div class="card">
       <a class="back-link" onclick="history.back()" href="signup.html">
@@ -39,7 +40,7 @@
 
       <div class="login-form" id="loginForm">
 
-        <!-- Email -->
+        <!-- Contact Number -->
         <div class="input-wrapper">
           <span class="input-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -49,7 +50,7 @@
               <polyline points="2,4 12,13 22,4"/>
             </svg>
           </span>
-          <input type="email" id="email" placeholder="Email" autocomplete="email" />
+          <input type="tel" id="contact" placeholder="Contact Number" autocomplete="tel" />
         </div>
 
         <!-- Password -->
