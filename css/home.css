@@ -5,19 +5,19 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --green-dark:    #2e7d5e;
-  --green-mid:     #3a9970;
-  --green-btn:     #3d8c6e;
-  --green-light:   #b2dbc8;
-  --green-pale:    #d4ede2;
-  --green-bg:      #cde8d8;
-  --green-sheet:   #c8e6d4;
-  --green-card:    #d6eee3;
-  --text-dark:     #1a4d35;
-  --text-muted:    #6aab8a;
-  --text-body:     #2d6b4e;
+  --green-dark:    #596d2d;
+  --green-mid:     #729045;
+  --green-btn:     #729045;
+  --green-light:   #cfeec5;
+  --green-pale:    #e3f3d8;
+  --green-bg:      #689138;
+  --green-sheet:   #e3f3d8;
+  --green-card:    #e3f3d8;
+  --text-dark:     #596d2d;
+  --text-muted:    #6b7c3f;
+  --text-body:     #596d2d;
   --white:         #ffffff;
-  --nav-height:    68px;
+  --nav-height:    46px;
   --font-main:     'Helvetica World', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   --font-body:     'Helvetica World', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
@@ -42,37 +42,32 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 2px 20px rgba(46,125,94,.10);
+  padding: 0 24px;
+  background: var(--white);
+  box-shadow: 0 1px 0 rgba(89,109,45,.12);
 }
 
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0;
   text-decoration: none;
 }
 
 .nav-brand img {
-  width: 36px;
-  height: 36px;
+  width: 76px;
+  height: 30px;
   object-fit: contain;
 }
 
 .nav-brand-text {
-  font-size: 1.35rem;
-  font-weight: 900;
-  color: var(--green-dark);
-  letter-spacing: -.3px;
+  display: none;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 14px;
   list-style: none;
 }
 
@@ -82,25 +77,31 @@ html, body {
 
 .nav-links a {
   display: block;
-  padding: 8px 16px;
-  border-radius: 50px;
+  min-width: 92px;
+  padding: 5px 18px;
+  border: 1px solid rgba(89,109,45,.6);
+  border-radius: 999px;
   font-family: var(--font-main);
-  font-size: .95rem;
-  font-weight: 700;
+  font-size: .58rem;
+  font-weight: 800;
   color: var(--text-body);
   text-decoration: none;
-  transition: background .2s, color .2s;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background .2s, border-color .2s, color .2s;
   white-space: nowrap;
 }
 
 .nav-links a:hover,
 .nav-links li:hover > a {
   background: var(--green-pale);
+  border-color: var(--green-pale);
   color: var(--green-dark);
 }
 
 .nav-links a.active {
   background: var(--green-pale);
+  border-color: var(--green-pale);
   color: var(--green-dark);
 }
 
@@ -112,7 +113,7 @@ html, body {
   min-width: 160px;
   background: var(--white);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(46,125,94,.18);
+  box-shadow: 0 8px 32px rgba(89,109,45,.18);
   padding: 8px;
   opacity: 0;
   pointer-events: none;
@@ -127,6 +128,9 @@ html, body {
 }
 
 .nav-dropdown a {
+  min-width: auto;
+  padding: 8px 10px;
+  border: 0;
   border-radius: 10px;
   font-size: .9rem;
   color: var(--text-dark);
@@ -134,6 +138,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 8px;
+  text-align: left;
+  text-transform: none;
 }
 
 .nav-dropdown a:hover {
@@ -153,6 +159,11 @@ html, body {
   color: var(--green-dark);
   font-size: .9rem;
   cursor: pointer;
+}
+
+.nav-links a.nav-profile-btn:hover {
+  background: var(--green-pale);
+  color: var(--green-dark);
 }
 
 .nav-profile-btn svg {
@@ -187,10 +198,9 @@ html, body {
   position: fixed;
   top: var(--nav-height);
   left: 0; right: 0;
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(12px);
+  background: var(--white);
   padding: 16px 24px 24px;
-  box-shadow: 0 8px 24px rgba(46,125,94,.12);
+  box-shadow: 0 8px 24px rgba(89,109,45,.12);
   z-index: 99;
   flex-direction: column;
   gap: 4px;
@@ -237,39 +247,105 @@ html, body {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(10,40,25,.25) 0%,
-    rgba(10,40,25,.52) 60%,
-    rgba(10,40,25,.72) 100%
-  );
+  background: rgba(154, 219, 241, 0.79);
   z-index: 1;
+}
+
+/*==WHITE OVERLAY==*/
+.hero-overlay::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 1000px;
+  height: 1000px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.75) 45%,
+    rgba(255, 255, 255, 0.35) 65%,
+    rgba(255, 255, 255, 0) 85%
+  );
+
+  filter: blur(40px);
+  pointer-events: none;
 }
 
 .hero-content {
   position: relative;
-  z-index: 2;
-  padding: 0 32px;
-  max-width: 900px;
+  z-index: 10;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   
+  align-items: center;      
+  text-align: center;
+  gap: 12px; 
+  padding: 0 24px;
 }
 
-.hero-content h1 {
-  font-size: clamp(3.5rem, 10vw, 8.4375rem);
-  font-weight: 900;
-  color: var(--white);
-  line-height: 1.0;
-  letter-spacing: -2px;
-  margin-bottom: 24px;
+.hero-logo {
+  width: clamp(400px, 55vw, 1400px);
+  height: auto;
+  margin-bottom: 8px;
 }
 
-.hero-content p {
+.hero-content p1 {
+  display: block;
   font-family: var(--font-body);
-  font-size: clamp(1rem, 2.5vw, 1.856rem);
-  color: rgba(255,255,255,.88);
-  line-height: 1.5;
-  max-width: 640px;
-  font-weight: 400;
+  font-size: clamp(1.4rem, 1.5vw, 1.3rem);
+  font-weight: 900;
+  color: #6b7c3f;
+  line-height: 1.1;
+  max-width: 800px;
+  margin-top: -50px;
 }
+
+.hero-content p2 {
+  display: block;
+  font-family: var(--font-body);
+  font-size: clamp(1.5rem, 2vw, 1.3rem);
+  color: gray;
+  line-height: 1.6;
+  max-width: 700px;
+  margin-top: 10px;
+}
+
+
+/*MOBILE VIEW*/
+@media (max-width: 640px) {
+
+  .hero-content {
+    padding: 32px 16px;
+    gap: 8px;
+  }
+
+  .hero-logo {
+    width: 100vw;
+    margin-top: -200px;
+    max-width: 500px; /* prevents it from being huge */
+  }
+
+  .hero-content p1 {
+    font-size: 0.70rem;
+    margin-top: -30px; /* remove negative spacing */
+    line-height: 1.2;
+  }
+
+  .hero-content p2 {
+    font-size: 0.75rem;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+}
+
+
 
 /* =============================================
    CTA SECTION
@@ -295,7 +371,7 @@ html, body {
   text-transform: uppercase;
   text-decoration: none;
   border-radius: 60px;
-  box-shadow: 0 6px 24px rgba(46,125,94,.32);
+  box-shadow: 0 6px 24px rgba(89,109,45,.32);
   transition: background .2s, transform .15s, box-shadow .2s;
   border: none;
   cursor: pointer;
@@ -304,13 +380,13 @@ html, body {
 .btn-cta:hover {
   background: var(--green-dark);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(46,125,94,.38);
+  box-shadow: 0 10px 30px rgba(89,109,45,.38);
 }
 
 .cta-stats {
   font-family: var(--font-body);
   font-size: .85rem;
-  color: var(--text-muted);
+  color: #ffffff;
   font-weight: 600;
   letter-spacing: .2px;
   text-align: center;
@@ -340,7 +416,7 @@ html, body {
   text-align: center;
   font-size: clamp(1.6rem, 4vw, 2.2rem);
   font-weight: 900;
-  color: var(--green-dark);
+  color: #ffffff;
   margin-bottom: 32px;
   letter-spacing: -.3px;
 }
@@ -361,7 +437,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  box-shadow: 0 2px 12px rgba(46,125,94,.08);
+  box-shadow: 0 2px 12px rgba(89,109,45,.08);
 }
 
 .how-card-title {
@@ -423,7 +499,6 @@ html, body {
 }
 
 
-
 /* =============================================
    CAROUSEL GALLERY 
 ============================================= */
@@ -435,7 +510,7 @@ html, body {
 .carousel-section h2{
   font-size: 2rem;
   font-weight: 900;
-  color: var(--green-dark);
+  color: #ffffff;
   margin-bottom: 24px;
 }
 
@@ -470,7 +545,7 @@ html, body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(46,125,94,.85);
+  background: rgba(89,109,45,.85);
   color: white;
   border: none;
   font-size: 20px;
@@ -482,7 +557,7 @@ html, body {
 }
 
 .carousel-btn:hover{
-  background: rgba(46,125,94,1);
+  background: rgba(89,109,45,1);
 }
 
 .prev{ left: 10px; }
@@ -498,14 +573,14 @@ html, body {
 .carousel-dots span{
   width: 10px;
   height: 10px;
-  background: rgba(46,125,94,.3);
+  background: rgba(89,109,45,.3);
   border-radius: 50%;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .carousel-dots span.active{
-  background: rgba(46,125,94,1);
+  background: rgba(89,109,45,1);
   transform: scale(1.2);
 }
 
