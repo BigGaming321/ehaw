@@ -5,19 +5,19 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --green-dark:    #2e7d5e;
-  --green-mid:     #3a9970;
-  --green-btn:     #3d8c6e;
-  --green-light:   #b2dbc8;
-  --green-pale:    #d4ede2;
-  --green-bg:      #2e7d5e;
-  --green-sheet:   #c8e6d4;
-  --green-card:    #d6eee3;
-  --text-dark:     #1a4d35;
-  --text-muted:    #6aab8a;
-  --text-body:     #2d6b4e;
+  --green-dark:    #596d2d;
+  --green-mid:     #729045;
+  --green-btn:     #729045;
+  --green-light:   #cfeec5;
+  --green-pale:    #e3f3d8;
+  --green-bg:      #689138;
+  --green-sheet:   #e3f3d8;
+  --green-card:    #e3f3d8;
+  --text-dark:     #596d2d;
+  --text-muted:    #6b7c3f;
+  --text-body:     #596d2d;
   --white:         #ffffff;
-  --nav-height:    68px;
+  --nav-height:    46px;
   --font-main:     'Helvetica World', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
 
@@ -38,37 +38,32 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 2px 20px rgba(46,125,94,.10);
+  padding: 0 24px;
+  background: var(--white);
+  box-shadow: 0 1px 0 rgba(89,109,45,.12);
 }
 
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0;
   text-decoration: none;
 }
 
 .nav-brand img {
-  width: 36px;
-  height: 36px;
+  width: 76px;
+  height: 30px;
   object-fit: contain;
 }
 
 .nav-brand-text {
-  font-size: 1.35rem;
-  font-weight: 900;
-  color: var(--green-dark);
-  letter-spacing: -.3px;
+  display: none;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 14px;
   list-style: none;
 }
 
@@ -76,21 +71,25 @@ html, body {
 
 .nav-links a {
   display: block;
-  padding: 8px 16px;
-  border-radius: 50px;
+  min-width: 92px;
+  padding: 5px 18px;
+  border: 1px solid rgba(89,109,45,.6);
+  border-radius: 999px;
   font-family: var(--font-main);
-  font-size: .95rem;
-  font-weight: 700;
+  font-size: .58rem;
+  font-weight: 800;
   color: var(--text-body);
   text-decoration: none;
-  transition: background .2s, color .2s;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background .2s, border-color .2s, color .2s;
   white-space: nowrap;
 }
 
 .nav-links a:hover,
-.nav-links li:hover > a { background: var(--green-pale); color: var(--green-dark); }
+.nav-links li:hover > a { background: var(--green-pale); border-color: var(--green-pale); color: var(--green-dark); }
 
-.nav-links a.active { background: var(--green-pale); color: var(--green-dark); }
+.nav-links a.active { background: var(--green-pale); border-color: var(--green-pale); color: var(--green-dark); }
 
 .nav-dropdown {
   position: absolute;
@@ -99,7 +98,7 @@ html, body {
   min-width: 160px;
   background: var(--white);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(46,125,94,.18);
+  box-shadow: 0 8px 32px rgba(89,109,45,.18);
   padding: 8px;
   opacity: 0;
   pointer-events: none;
@@ -114,6 +113,9 @@ html, body {
 }
 
 .nav-dropdown a {
+  min-width: auto;
+  padding: 8px 10px;
+  border: 0;
   border-radius: 10px;
   font-size: .9rem;
   color: var(--text-dark);
@@ -121,6 +123,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 8px;
+  text-align: left;
+  text-transform: none;
 }
 
 .nav-dropdown a:hover { background: #ffeaea; color: #c0392b; }
@@ -136,6 +140,11 @@ html, body {
   color: var(--green-dark);
   font-size: .9rem;
   cursor: pointer;
+}
+
+.nav-links a.nav-profile-btn:hover {
+  background: var(--green-pale);
+  color: var(--green-dark);
 }
 
 .nav-hamburger {
@@ -167,10 +176,9 @@ html, body {
   position: fixed;
   top: var(--nav-height);
   left: 0; right: 0;
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(12px);
+  background: var(--white);
   padding: 16px 24px 24px;
-  box-shadow: 0 8px 24px rgba(46,125,94,.12);
+  box-shadow: 0 8px 24px rgba(89,109,45,.12);
   z-index: 99;
   flex-direction: column;
   gap: 4px;
@@ -303,4 +311,3 @@ html, body {
   .about-hero { padding: 60px 80px; }
   .about-card { width: 600px; padding: 64px 60px; }
 }
-
