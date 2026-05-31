@@ -212,7 +212,7 @@ html, body {
 ============================================= */
 .about-hero {
   padding: 45px 32px 32px;
-  background-image: url("images/otherBG.png");
+  background-image: url("../images/otherBG.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
