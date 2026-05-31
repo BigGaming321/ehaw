@@ -18,33 +18,31 @@ mobileMenu.querySelectorAll('a').forEach(link => {
 
 
 
-/* Loop Carousel Gallery */
+/* CAROUSEL CODE */
 const track = document.getElementById("carouselTrack");
 const slides = track.querySelectorAll("img");
-const dots = document.querySelectorAll("#carouselDots span");
 
 let index = 0;
-const visible = 3;
-const maxIndex = slides.length - visible;
+
+function getVisible() {
+  return window.innerWidth <= 600 ? 1 : 3;
+}
 
 function updateCarousel() {
-  track.style.transform = `translateX(-${index * (100 / visible)}%)`;
-  updateDots();
+  const visible = getVisible();
+  const maxIndex = slides.length - visible;
+
+  if (index > maxIndex) index = maxIndex;
+  if (index < 0) index = 0;
+
+  const movePercent = index * (100 / visible);
+  track.style.transform = `translateX(-${movePercent}%)`;
 }
 
-// update dots UI
-function updateDots() {
-  dots.forEach(dot => dot.classList.remove("active"));
-
-  // display correct dots
-  let dotIndex = index;
-  if (dotIndex > dots.length - 1) dotIndex = 0;
-
-  dots[dotIndex].classList.add("active");
-}
-
-// next/prev buttons
 function moveSlide(direction) {
+  const visible = getVisible();
+  const maxIndex = slides.length - visible;
+
   index += direction;
 
   if (index < 0) index = maxIndex;
@@ -53,11 +51,6 @@ function moveSlide(direction) {
   updateCarousel();
 }
 
-// clicking the dots
-function goToSlide(i) {
-  index = i;
-  updateCarousel();
-}
+window.addEventListener("resize", updateCarousel);
 
-
-updateCarousel();
+updateCarousel(); 
