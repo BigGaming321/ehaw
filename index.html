@@ -1,7 +1,7 @@
 <!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home – E-HAW | Barangay Kamputhaw</title>
@@ -85,16 +85,22 @@
     </div>
   </section>
 
+  <!-- =============================================
+       BUTTON CREATE REPORT
+  ============================================= -->
+
+  <div class="report-btn-wrapper"> <a href="report.html" class="btn-report">CREATE REPORT</a> </div>
 
   <!-- =============================================
        CTA SECTION
   ============================================= -->
   <section class="cta-section">
-    <a href="report.html" class="btn-cta">Create Report</a>
     <p class="cta-stats">50+ Issues Resolved &nbsp;|&nbsp; 10-Minute Average Report Time &nbsp;|&nbsp; 24/7 Monitoring</p>
   </section>
 
-  <div class="section-divider"></div>
+  <div class="divider-wrap">
+     <div class="section-divider"></div>
+  </div>
 
   <!-- =============================================
        HOW IT WORKS SECTION
@@ -132,33 +138,27 @@
     <h2>Gallery</h2>
 
     <div class="carousel-wrapper">
+
       <button class="carousel-btn prev" onclick="moveSlide(-1)">❮</button>
 
-      <div class="carousel-track" id="carouselTrack">
-        <img src="images/2.2.png" alt="" class="clone">
-       
-        <img src="images/2.png" alt="">
-        <img src="images/pic2.jpg" alt="">
-        <img src="images/pic3.jpg" alt="">
-        <img src="images/pic4.jpg" alt="">
-        <img src="images/pic5.jpg" alt="">
+      <div class="carousel-viewport">
 
-        <img src="images/1.png" alt="" class="clone">
+        <div class="carousel-track" id="carouselTrack">
+
+          <img src="images/2.png">
+          <img src="images/pic2.jpg">
+          <img src="images/pic3.jpg">
+          <img src="images/pic4.jpg">
+          <img src="images/pic5.jpg">
+
+        </div>
 
       </div>
 
       <button class="carousel-btn next" onclick="moveSlide(1)">❯</button>
-      
-      <!-- DOTS (BOTTOM INSIDE SECTION) -->
-      <div class="carousel-dots" id="carouselDots">
-        <span onclick="goToSlide(0)"></span>
-        <span onclick="goToSlide(1)"></span>
-        <span onclick="goToSlide(2)"></span>
-        <span onclick="goToSlide(3)"></span>
-        <span onclick="goToSlide(4)"></span>
-      </div>
 
     </div>
+
   </section>
 
 
@@ -171,8 +171,6 @@
       <!-- LEFT: Light green header panel + TITLE -->
       <div class="about-hero">
         <h1>About Us</h1>
-        <img src="images/insertpic.jpg" alt="*no pic yet"
-            style="width:100%; border-radius:18px; margin-bottom:20px;">
       </div>
 
       <!-- RIGHT / MAIN: Dark green content card -->
