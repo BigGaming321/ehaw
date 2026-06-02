@@ -16,7 +16,7 @@
   <nav class="navbar">
 
     <a class="nav-brand" href="index.html">
-      <img src="images/7.png" alt="E-HAW Logo" />
+      <img src="images/logo_graphic.png" alt="E-HAW Logo" />
       <span class="nav-brand-text">E-HAW</span>
     </a>
 
@@ -119,9 +119,7 @@
       </p>
 
        <!-- LEFT IMAGE -->
-      <div class="report-left">
-        <img src="images/report.jpg" alt="pics">
-      </div>
+      
 
     </div>
 
@@ -206,7 +204,23 @@
 
         <div class="section-header">
 
-          <span class="section-label">Upload Photo</span>
+          <label for="fileInput" class="upload-btn">
+
+          <svg width="18" height="18" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+
+          <polyline points="16 16 12 12 8 16"/>
+          <line x1="12" y1="12" x2="12" y2="21"/>
+          <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+
+        </svg>
+
+        Upload
+
+        </label>
 
           <span class="section-hint">
             Optional: Attach photo of the incident (Max 10MB).
@@ -246,28 +260,6 @@
 
         </div>
 
-        <button
-          type="button"
-          class="upload-btn"
-          id="uploadBtn"
-        >
-
-          <svg width="18" height="18" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor"
-               stroke-width="2.2"
-               stroke-linecap="round"
-               stroke-linejoin="round">
-
-            <polyline points="16 16 12 12 8 16"/>
-            <line x1="12" y1="12" x2="12" y2="21"/>
-            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
-
-          </svg>
-
-          Upload
-
-        </button>
-
       </div>
 
       <!-- ACTIONS -->
@@ -287,7 +279,7 @@
           class="btn-submit"
           id="submitBtn"
         >
-          Submit Report
+          Submit
         </button>
 
       </div>
