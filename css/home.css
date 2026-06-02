@@ -566,7 +566,7 @@ html, body {
   padding: 60px 24px;
   text-align: center;
 
-  background-image: url("/images/otherBG.png");
+  background-image: url("../images/otherBG.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
