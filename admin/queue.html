@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>E-HAW Panel — Report List</title>
-  <link rel="stylesheet" href="css/reports.css" />
+  <title>E-HAW Panel — Verification Queue</title>
+  <link rel="stylesheet" href="css/queue.css" />
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
@@ -25,8 +25,8 @@
         </svg>
       </a>
 
-      <!-- Reports (active) -->
-      <a href="reports.html" class="sidebar__nav-item active" aria-label="Reports" title="Reports">
+      <!-- Reports -->
+      <a href="reports.html" class="sidebar__nav-item" aria-label="Reports" title="Reports">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="4" y="3" width="12" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
           <path d="M8 8H12M8 12H14M8 16H11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -43,8 +43,9 @@
           <path d="M17 14L19 16L23 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
-      <!-- Verification Queue -->
-      <a href="queue.html" class="sidebar__nav-item" aria-label="Verification Queue" title="Verification Queue">
+
+      <!-- Verification Queue (active) -->
+      <a href="queue.html" class="sidebar__nav-item active" aria-label="Verification Queue" title="Verification Queue">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M9 11L12 14L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C13.3956 3 14.7169 3.32271 15.8907 3.89648" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -100,17 +101,17 @@
     <!-- CONTENT -->
     <main class="content" role="main">
 
-      <section class="section" aria-labelledby="reports-heading">
+      <section class="section" aria-labelledby="queue-heading">
         <div class="section__header">
-          <h2 class="section__title" id="reports-heading">
-            Report List
+          <h2 class="section__title" id="queue-heading">
+            Verification Queue
             <svg class="section__title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                  aria-hidden="true" style="width:18px;height:18px;color:var(--text-muted)">
-              <path d="M3 6H21M3 12H15M3 18H9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M17 9l4 3-4 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 11L12 14L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </h2>
-          <button class="section__action-btn" title="Export" aria-label="Export reports">
+          <button class="section__action-btn" title="Export" aria-label="Export queue">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <polyline points="7 10 12 15 17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -119,29 +120,18 @@
           </button>
         </div>
 
-        <div class="table-card" role="region" aria-label="Report Table">
-          <div class="filter-wrapper">
-            <label for="validityFilter" style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;font-weight:700;letter-spacing:0.05em;">Filter:</label>
-            <select id="validityFilter" class="validity-select">
-              <option value="all">All Records</option>
-              <option value="Awaiting Review">Awaiting Review</option>
-              <option value="Valid">Valid</option>
-              <option value="Invalid">Invalid</option>
-            </select>
-          </div>
-
-          <table class="report-table" aria-label="List of reports">
+        <div class="table-card" role="region" aria-label="Verification Queue Table">
+          <table class="queue-table" aria-label="Verification queue list">
             <thead>
               <tr>
                 <th scope="col">Report Number</th>
                 <th scope="col">Date</th>
-                <th scope="col">Category</th>
-                <th scope="col">Validity</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
-            <tbody id="reportTableBody"></tbody>
+            <tbody id="queueTableBody">
+              <!-- Populated by JS -->
+            </tbody>
           </table>
         </div>
       </section>
@@ -149,47 +139,6 @@
     </main>
   </div>
 
-  <!-- ═══════════════ REPORT MODAL ═══════════════ -->
-  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true"
-       aria-labelledby="modalReportId" aria-hidden="true">
-    <div class="modal" id="reportModal">
-      <button class="modal-close" id="modalClose" aria-label="Close modal">&#10005;</button>
-
-      <div class="modal-header-bar">
-        <span class="modal-report-id" id="modalReportId">ID</span>
-        <span class="modal-divider">|</span>
-        <span class="modal-date" id="modalDate">Date</span>
-        <span class="modal-section-label" style="margin-right:30px;">Incident Details</span>
-      </div>
-
-      <div class="modal-body">
-        <div class="modal-left">
-          <div class="modal-profile-img-wrap">
-            <img src="" alt="Incident photo" class="modal-profile-img" id="modalProfileImg" />
-          </div>
-          <div class="modal-info">
-            <p class="modal-info-label">Name</p>
-            <p class="modal-info-value" id="modalName">Anonymous Resident</p>
-          </div>
-        </div>
-
-        <div class="modal-right">
-          <div class="modal-description-box" id="modalDescription"
-               role="region" aria-label="Report description" tabindex="0">
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-footer" id="modalFooter"></div>
-    </div>
-  </div>
-
-  <!-- ═══════════════ IMAGE LIGHTBOX ═══════════════ -->
-  <div class="image-lightbox" id="imageLightbox" role="dialog">
-    <button class="lightbox-close" id="lightboxClose">&times;</button>
-    <img src="" id="lightboxImg" alt="Enlarged evidence" />
-  </div>
-
-  <script src="js/reports.js"></script>
+  <script src="js/queue.js"></script>
 </body>
 </html>
