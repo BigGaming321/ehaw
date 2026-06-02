@@ -1,7 +1,7 @@
 /* Review Section Styles */
 .review-section {
   padding: 60px 20px;
-  background: linear-gradient(135deg, var(--green-bg) 0%, var(--green-pale) 100%);
+  background: var(--green-pale);
   text-align: center;
 }
 
