@@ -393,7 +393,7 @@ HERO TEXT (OVER IMAGE) MOBILE
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(89, 113, 45, 0.79);
+    background: rgba(89, 113, 45, 0.68);
     z-index: 1;
   }
 
