@@ -50,6 +50,7 @@ html, body {
   height: 100%;
   z-index: 0;
   overflow: hidden;
+  flex: 1.7;
 }
 
 .hero img {
@@ -58,19 +59,23 @@ html, body {
   object-fit: cover;
   object-position: center 40%;
   display: block;
+  transform: scale(1.15);
 }
 
 .hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background:  rgba(55, 138, 62, 0.548);
+  background: linear-gradient(
+    135deg,
+    rgba(89, 109, 45, 0.75),
+    rgba(106, 145, 57, 0.55)
+  );
   z-index: 1;
-  pointer-events: none;
 }
 
 /* =============================================
-   HERO TEXT (OVER IMAGE)
+   HERO TEXT (OVER IMAGE) Desktop
 ============================================= */
 .hero-text {
   position: absolute;
@@ -86,7 +91,7 @@ html, body {
 
 .hero-text h2 {
   font-size: clamp(4.5rem, 12vw, 7.5rem);
-  font-weight: 900;
+  font-weight: 1000;
   margin: 0;
   margin-bottom: 8px;
   line-height: 0.9;
@@ -103,17 +108,43 @@ html, body {
   margin-top: -8px;
 }
 
-/* MOBILE */
+/*=============================================
+HERO TEXT (OVER IMAGE) MOBILE
+============================================ */
 @media (max-width: 959px) {
+
+  .hero-content {
+    position: relative;
+    z-index: 20;
+    width: 100%;
+    text-align: center;
+    top: 70px;
+  }
+
   .hero-text {
-    top: 14vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .hero-text h2 {
+    font-size: 3.5rem;
+    margin-bottom: 6px;
+  }
+
+  .hero-text p {
+    margin-top: 0px;
+    font-size: 0.7rem;
   }
 
   .card {
-    margin: 240px auto 0;
+    margin-top: 120px;
+    border-radius: 32px 32px 0 0;
   }
 }
-
 
 
 /* =============================================
@@ -324,11 +355,15 @@ html, body {
    DESKTOP FIX (PROPER IMAGE + OVERLAY TEXT)
 ============================================= */
 @media (min-width: 960px) {
+    html,body,
+    .page {
+      height: 100vh;
+    }
 
   .page {
     flex-direction: row;
     align-items: stretch;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100vh;
     padding: 0;
     gap: 0;
@@ -337,20 +372,33 @@ html, body {
   .hero {
     position: relative;
     flex: 1;
-    height: 100vh;
+    height: auto;
+    min-height: 100%;
     max-width: none;
     overflow: hidden;
   }
 
   .hero img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center center;
-}
+    transform: scale(1.15);
+  }
+
 
   .hero::after {
-    background: rgba(55, 138, 62, 0.548);
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(89, 109, 45, 0.75),
+      rgba(106, 145, 57, 0.55)
+    );
+    z-index: 1;
   }
 
   
@@ -366,12 +414,12 @@ html, body {
   }
 
   .hero-text h2 {
-    font-size: 4rem;
+    font-size: 7rem;
     margin-bottom: 10px;
   }
 
   .hero-text p {
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     line-height: 1.25;
     max-width: 500px;
     margin-top: -6px;
