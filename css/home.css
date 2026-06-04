@@ -345,20 +345,25 @@ html, body {
     line-height: 1.4;
   }
    .hero-overlay::before {
-    top: 45%; 
-    width: 500px;
-    height: 500px;
+    top: 42%; 
+    width: 400px;
+    height: 400px;
   }
 }
 
 @media (max-width: 640px) {
   .hero,
   .hero-content {
-    min-height: 65vh;
+    min-height: 60vh;
   }
 
   .hero-logo {
     margin-top: -20px;
+  }
+   
+   .hero-bg {
+    transform: scale(1.25);
+    object-position: center center;
   }
 }
 
