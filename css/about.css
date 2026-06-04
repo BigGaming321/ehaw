@@ -260,7 +260,7 @@ html, body {
   #about {
     position: relative;
 
-    background-image: url("/images/otherBG.png");
+    background-image: url("../images/otherBG.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
