@@ -19,8 +19,8 @@
   --shadow-card:   0 -6px 32px rgba(89,109,45,.12), 0 2px 16px rgba(89,109,45,.08);
   --radius-input:  50px;
   --radius-card:   32px;
-  --font-main:     'Nunito', sans-serif;
-  --font-body:     'Nunito Sans', sans-serif;
+  --font-main:     'Inter', sans-serif;
+  --font-body:     'Inter', sans-serif;
 }
 
 html, body {
