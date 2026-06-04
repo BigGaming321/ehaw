@@ -353,9 +353,12 @@ html, body {
 }
 
 @media (max-width: 640px) {
-  .hero,
+  .hero {
+    min-height: auto;
+  }
+
   .hero-content {
-    min-height: 75vh;
+    min-height: auto;
   }
 
   .hero-logo {
