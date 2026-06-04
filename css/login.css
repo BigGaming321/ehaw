@@ -18,9 +18,9 @@
   --white:         #ffffff;
   --radius-input:  50px;
   --radius-card:   32px;
-  --font-main:     'Nunito', sans-serif;
-  --font-body:     'Nunito Sans', sans-serif;
-  --font-display:  'Playfair Display', serif;
+  --font-main:     'Inter', sans-serif;
+  --font-body:     'Inter', sans-serif;
+  --font-display:  'Inter', sans-serif;
 }
 
 html, body {
