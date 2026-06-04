@@ -344,7 +344,8 @@ html, body {
     margin-top: 6px;
     line-height: 1.4;
   }
-   .hero-overlay::before {
+
+  .hero-overlay::before {
     top: 42%; 
     width: 400px;
     height: 400px;
@@ -360,8 +361,8 @@ html, body {
   .hero-logo {
     margin-top: -20px;
   }
-   
-   .hero-bg {
+
+  .hero-bg {
     transform: scale(1.25);
     object-position: center center;
   }
