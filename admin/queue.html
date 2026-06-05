@@ -12,9 +12,9 @@
   <!-- ═══════════════ SIDEBAR ═══════════════ -->
   <aside class="sidebar" role="navigation" aria-label="Main Navigation">
 
-    <div class="sidebar__logo" title="E-HAW Panel Home">
+    <a href="home.html" class="sidebar__logo" title="E-HAW Panel Home" style="display: flex;">
       <img src="images/7.png" alt="E-HAW Logo" class="logo-icon" />
-    </div>
+    </a>
 
     <nav class="sidebar__nav">
 
@@ -130,14 +130,60 @@
               </tr>
             </thead>
             <tbody id="queueTableBody">
-              <!-- Populated by JS -->
-            </tbody>
+              </tbody>
           </table>
         </div>
       </section>
 
     </main>
+  </div> <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalReportId" aria-hidden="true">
+    <div class="modal" id="reportModal">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&#10005;</button>
+
+      <div class="modal-header-bar">
+        <span class="modal-report-id" id="modalReportId">ID</span>
+        <span class="modal-divider">|</span>
+        <span class="modal-date" id="modalDate">Date</span>
+        <span class="modal-section-label" style="margin-right:30px;">Verification Screening</span>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-left">
+          <div class="modal-profile-img-wrap">
+            <img src="" alt="Incident photo" class="modal-profile-img" id="modalProfileImg" />
+          </div>
+          <div class="modal-info">
+            <p class="modal-info-label">Name</p>
+            <p class="modal-info-value" id="modalName">Anonymous Resident</p>
+          </div>
+        </div>
+
+        <div class="modal-right">
+          <div class="modal-description-box" id="modalDescription" role="region" aria-label="Report description" tabindex="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" id="modalFooter"></div>
+    </div>
   </div>
+
+  <div class="image-lightbox" id="imageLightbox" role="dialog">
+    <button class="lightbox-close" id="lightboxClose">&times;</button>
+    <img src="" id="lightboxImg" alt="Enlarged evidence" />
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="../js/config.js"></script>
+
+  <script>
+    if (typeof CONFIG !== 'undefined') {
+      window.supabaseClient = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+    } else {
+      console.error("Configuration tracking missing! Check your path to ../js/config.js");
+    }
+  </script>
 
   <script src="js/queue.js"></script>
 </body>

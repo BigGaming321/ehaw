@@ -12,9 +12,9 @@
   <!-- ═══════════════ SIDEBAR ═══════════════ -->
   <aside class="sidebar" role="navigation" aria-label="Main Navigation">
 
-    <div class="sidebar__logo" title="E-HAW Panel Home">
+    <a href="home.html" class="sidebar__logo" title="E-HAW Panel Home" style="display: flex;">
       <img src="images/7.png" alt="E-HAW Logo" class="logo-icon" />
-    </div>
+    </a>
 
     <nav class="sidebar__nav">
 
@@ -120,15 +120,20 @@
         </div>
 
         <div class="table-card" role="region" aria-label="Report Table">
-          <div class="filter-wrapper">
-            <label for="validityFilter" style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;font-weight:700;letter-spacing:0.05em;">Filter:</label>
-            <select id="validityFilter" class="validity-select">
-              <option value="all">All Records</option>
-              <option value="Awaiting Review">Awaiting Review</option>
-              <option value="Valid">Valid</option>
-              <option value="Invalid">Invalid</option>
-            </select>
-          </div>
+          <!-- ============================================================
+            UPDATED: FILTER GROUPS FOR STATUS STATES ONLY
+            ============================================================ -->
+        <div class="filter-wrapper">
+          <label for="statusFilter" style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;font-weight:700;letter-spacing:0.05em;">Filter By Status:</label>
+          <!-- Changed id from validityFilter to statusFilter -->
+          <select id="statusFilter" class="validity-select">
+            <option value="all">All Records</option>
+            <option value="Pending">Pending</option>
+            <option value="On Hold">On Hold</option>
+            <option value="Resolved">Resolved</option>
+            <option value="Declined">Declined</option>
+          </select>
+        </div>
 
           <table class="report-table" aria-label="List of reports">
             <thead>
@@ -136,7 +141,6 @@
                 <th scope="col">Report Number</th>
                 <th scope="col">Date</th>
                 <th scope="col">Category</th>
-                <th scope="col">Validity</th>
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
               </tr>
@@ -189,6 +193,22 @@
     <button class="lightbox-close" id="lightboxClose">&times;</button>
     <img src="" id="lightboxImg" alt="Enlarged evidence" />
   </div>
+
+  <!-- ============================================================
+       SUPABASE SERVERLESS INITIALIZATION SEQUENCE
+       ============================================================ -->
+  <!-- 1. Supabase JS SDK CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="../js/config.js"></script>
+
+  <script>
+    if (typeof CONFIG !== 'undefined') {
+      window.supabaseClient = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+    } else {
+      console.error("Configuration tracking missing! Check your path to ../js/config.js");
+    }
+  </script>
 
   <script src="js/reports.js"></script>
 </body>

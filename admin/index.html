@@ -12,9 +12,9 @@
   <!-- ═══════════════ SIDEBAR ═══════════════ -->
   <aside class="sidebar" role="navigation" aria-label="Main Navigation">
 
-    <div class="sidebar__logo" title="E-HAW Panel Home">
+    <a href="home.html" class="sidebar__logo" title="E-HAW Panel Home" style="display: flex;">
       <img src="images/7.png" alt="E-HAW Logo" class="logo-icon" />
-    </div>
+    </a>
 
     <nav class="sidebar__nav">
 
@@ -136,8 +136,8 @@
               <div class="stat-box__value" data-stat="pending">0</div>
             </div>
             <div class="stat-box">
-              <div class="stat-box__label">Unresolved</div>
-              <div class="stat-box__value" data-stat="unresolved">0</div>
+              <div class="stat-box__label">On Hold</div>
+              <div class="stat-box__value" data-stat="hold">0</div>
             </div>
             <div class="stat-box">
               <div class="stat-box__label">Resolved</div>
@@ -189,6 +189,18 @@
 
     </main>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="../js/config.js"></script>
+
+  <script>
+    if (typeof CONFIG !== 'undefined') {
+      window.supabaseClient = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+    } else {
+      console.error("Configuration tracking module missing! Check your path to ../js/config.js");
+    }
+  </script>
 
   <script src="js/index.js"></script>
 </body>
