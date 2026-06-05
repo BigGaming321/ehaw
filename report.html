@@ -343,6 +343,18 @@
 
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="js/config.js"></script>
+
+  <script>
+    if (typeof CONFIG !== 'undefined') {
+      window.supabaseClient = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+    } else {
+      console.error("Configuration file 'js/config.js' is missing!");
+    }
+  </script>
+
   <script src="js/report.js"></script>
 
 </body>
