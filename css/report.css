@@ -673,3 +673,54 @@ body.overlay-open {
   cursor: not-allowed;
   opacity: 0.8;
 }
+
+/* Add this class to smoothly hide the upload label without causing structural collapse */
+.upload-btn.hidden {
+  display: none !important;
+}
+
+/* css/report.css */
+
+/* Target the text hint specifically when we want to clear it from view */
+.section-hint.hidden {
+  display: none !important;
+}
+
+/* css/report.css */
+
+/* =============================================
+   IMAGE LIGHTBOX MODAL UI
+============================================= */
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000000; /* Stays above everything, even the navbar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  cursor: zoom-out;
+  transition: opacity 0.25s ease;
+}
+
+.image-lightbox.active {
+  opacity: 1;
+}
+
+.image-lightbox img {
+  max-width: 90%;
+  max-height: 85vh;
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  transform: scale(0.95);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: default;
+}
+
+.image-lightbox.active img {
+  transform: scale(1);
+}
