@@ -1,14 +1,9 @@
 /* =============================================
-   PREVENT PAGE RELOAD
+   PREVENT DEFAULT FORM REFRESHES
 ============================================= */
 window.addEventListener('submit', (e) => {
   e.preventDefault();
 });
-
-window.onbeforeunload = function () {
-  console.log('PAGE IS RELOADING');
-};
-
 
 /* =============================================
    HAMBURGER MENU
@@ -16,106 +11,130 @@ window.onbeforeunload = function () {
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-});
-
-mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
   });
-});
 
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+}
 
 /* =============================================
    CATEGORY CHIPS (Single Select)
 ============================================= */
 const chips = document.querySelectorAll('.chip');
-
-// Ensure no chip is selected on initial page load
 chips.forEach(chip => chip.classList.remove('selected'));
 
 chips.forEach(chip => {
   chip.addEventListener('click', () => {
-    // 1. Remove selection from all others
     chips.forEach(c => c.classList.remove('selected'));
-
-    // 2. Add selection to the one clicked
     chip.classList.add('selected');
   });
 });
 
-
 /* =============================================
-   FILE UPLOAD
+   FILE UPLOAD UI HANDLING (VANISHING + VIEWABLE)
 ============================================= */
-const uploadBtn = document.getElementById('uploadBtn');
 const fileInput = document.getElementById('fileInput');
 const uploadPreview = document.getElementById('uploadPreview');
 const fileName = document.getElementById('fileName');
 const removeFile = document.getElementById('removeFile');
 
-uploadBtn.addEventListener('click', () => {
+const uploadBtnEl = document.querySelector('.upload-btn');
+const sectionHintEl = uploadBtnEl ? uploadBtnEl.nextElementSibling : null;
 
-  fileInput.click();
+if (fileInput) {
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files.length) {
+      const f = fileInput.files[0];
 
-});
+      /* ---------- FILE SIZE LIMIT (10MB) ---------- */
+      if (f.size > 10 * 1024 * 1024) {
+        alert('File exceeds 10MB limit. Please choose a smaller image.');
+        fileInput.value = '';
+        return;
+      }
 
-fileInput.addEventListener('change', () => {
+      if (fileName) fileName.textContent = f.name;
+      if (uploadPreview) uploadPreview.classList.add('visible');
 
-  if (fileInput.files.length) {
-
-    const f = fileInput.files[0];
-
-    /* ---------- FILE SIZE LIMIT ---------- */
-    if (f.size > 10 * 1024 * 1024) {
-
-      alert('File exceeds 10MB limit. Please choose a smaller image.');
-
-      fileInput.value = '';
-
-      return;
-
+      if (uploadBtnEl) uploadBtnEl.classList.add('hidden');
+      if (sectionHintEl && sectionHintEl.classList.contains('section-hint')) {
+        sectionHintEl.classList.add('hidden');
+      }
     }
+  });
+}
 
-    fileName.textContent = f.name;
+/* ---------- CLICK PREVIEW TO VIEW IMAGE FULL-SCREEN ---------- */
+if (uploadPreview) {
+  uploadPreview.style.cursor = 'zoom-in';
+  
+  uploadPreview.addEventListener('click', (e) => {
+    if (e.target === removeFile || removeFile?.contains(e.target)) return;
 
-    uploadPreview.classList.add('visible');
+    if (fileInput && fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+      
+      reader.onload = (event) => {
+        const lightbox = document.createElement('div');
+        lightbox.className = 'image-lightbox';
+        
+        const img = document.createElement('img');
+        img.src = event.target.result;
+        
+        lightbox.appendChild(img);
+        document.body.appendChild(lightbox);
+        
+        requestAnimationFrame(() => {
+          lightbox.classList.add('active');
+        });
+        
+        lightbox.addEventListener('click', () => {
+          lightbox.classList.remove('active');
+          setTimeout(() => lightbox.remove(), 250);
+        });
 
-    uploadBtn.style.display = 'none';
+        img.addEventListener('click', (innerEvent) => {
+          innerEvent.stopPropagation();
+        });
+      };
+      
+      reader.readAsDataURL(fileInput.files[0]);
+    }
+  });
+}
 
-  }
+if (removeFile) {
+  removeFile.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (fileInput) fileInput.value = '';
+    if (uploadPreview) uploadPreview.classList.remove('visible');
+    if (fileName) fileName.textContent = 'photo.jpg';
 
-});
-
-removeFile.addEventListener('click', () => {
-
-  fileInput.value = '';
-
-  uploadPreview.classList.remove('visible');
-
-  uploadBtn.style.display = '';
-
-});
-
+    if (uploadBtnEl) uploadBtnEl.classList.remove('hidden');
+    if (sectionHintEl && sectionHintEl.classList.contains('section-hint')) {
+      sectionHintEl.classList.remove('hidden');
+    }
+  });
+}
 
 /* =============================================
-   SHAKE ANIMATION
+   SHAKE ANIMATION FOR FIELD VALIDATION
 ============================================= */
 function shake(el) {
-
   el.style.animation = 'none';
-
   el.getBoundingClientRect();
-
   el.style.animation = 'shake .35s ease';
-
 }
 
 const shakeStyle = document.createElement('style');
-
 shakeStyle.textContent = `
 @keyframes shake {
   0%,100% { transform: translateX(0); }
@@ -124,138 +143,167 @@ shakeStyle.textContent = `
   60% { transform: translateX(-4px); }
   80% { transform: translateX(4px); }
 }`;
-
 document.head.appendChild(shakeStyle);
 
+/* ============================================================
+   FORM SUBMISSION (REPLACED PART: DIRECT TO SUPABASE VIA SDK)
+   ============================================================ */
+if (submitBtn) {
+  submitBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-/* =============================================
-   FORM SUBMISSION (Updated for Supabase + Images)
-============================================= */
-submitBtn.addEventListener('click', async (e) => {
-  
-  e.preventDefault();
-  e.stopPropagation();
+    const selected = document.querySelector('.chip.selected');
+    const subject = subjectInput ? subjectInput.value.trim() : '';
+    let valid = true;
 
-  const selected = document.querySelector('.chip.selected');
-  const subject = subjectInput.value.trim();
-  
-  // Elements for Name and Email (optional)
-  const nameInput = document.getElementById('nameInput'); 
-  const emailInput = document.getElementById('emailInput');
+    /* --- CHIP BOX VALIDATION --- */
+    const categoryBox = document.getElementById('categoryChips');
+    if (!selected && categoryBox) {
+      categoryBox.style.outline = '2px solid rgba(220,60,60,.4)';
+      categoryBox.style.borderRadius = '14px';
+      shake(categoryBox);
+      valid = false;
+    } else if (categoryBox) {
+      categoryBox.style.outline = '';
+    }
 
-  let valid = true;
+    /* --- TEXT AREA VALIDATION --- */
+    if (!subject && subjectInput) {
+      subjectInput.style.boxShadow = '0 0 0 3px rgba(220,60,60,.30)';
+      shake(subjectInput);
+      valid = false;
+    } else if (subjectInput) {
+      subjectInput.style.boxShadow = '';
+    }
 
-  /* --- CATEGORY VALIDATION --- */
-  const categoryBox = document.getElementById('categoryChips');
-  if (!selected) {
-    categoryBox.style.outline = '2px solid rgba(220,60,60,.4)';
-    categoryBox.style.borderRadius = '14px';
-    shake(categoryBox);
-    valid = false;
-  } else {
-    categoryBox.style.outline = '';
-  }
+    if (!valid) return;
 
-  /* --- SUBJECT VALIDATION --- */
-  if (!subject) {
-    subjectInput.style.boxShadow = '0 0 0 3px rgba(220,60,60,.30)';
-    shake(subjectInput);
-    valid = false;
-  }
+    // Read attributes directly from the dynamic HTML dataset layer
+    const categoryValue = selected.getAttribute('data-cat') || selected.dataset.cat || 'Others';
 
-  if (!valid) return;
+    submitBtn.innerText = 'Uploading...';
+    submitBtn.disabled = true;
 
-  /* --- LOADING STATE --- */
-  // Create the spinner element
-  const spinner = '<span class="spinner"></span>';
-  submitBtn.innerHTML = `${spinner} Uploading...`;
-  submitBtn.disabled = true;
+    try {
+      const supabase = window.supabaseClient;
+      if (!supabase) {
+        throw new Error('Supabase client was not initialized properly. Check config.js initialization.');
+      }
 
-  /* --- DATA PREPARATION (FormData for Images) --- */
-  // We use FormData because JSON cannot carry file data.
-  const formData = new FormData();
-  
-  formData.append('name', nameInput ? nameInput.value.trim() : 'Anonymous');
-  formData.append('email', emailInput ? emailInput.value.trim() : 'N/A');
-  formData.append('category', selected.innerText);
-  formData.append('subject', subject);
+      let publicPhotoUrl = null;
 
-  // Check if a file is actually selected before appending
-  if (fileInput.files[0]) {
-    // The key 'reportPhoto' MUST match upload.single('reportPhoto') in server.js
-    formData.append('reportPhoto', fileInput.files[0]);
-  }
+      /* --- 1. STORAGE BUCKET TRANSACTION (FIXED STORAGE PATH) --- */
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const fileExt = file.name.split('.').pop();
+        
+        // Form the clean, random, non-clashing unique string name
+        const uniqueFileName = `${Date.now()}-${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
+        
+        // FIXED: Prepended 'public/' to match your storage folder policy constraint exactly!
+        const filePath = `public/${uniqueFileName}`; 
 
-  // Inside submitBtn listener in report.js
-  try {
-    const response = await fetch('https://e-haw.onrender.com/api/reports', {
-      method: 'POST',
-      body: formData
-    });
+        console.log('Uploading image stream to bucket:', filePath);
 
-    // Check status before parsing JSON
-    if (response.status === 201) {
-      successOverlay.classList.add('visible');
-      document.body.classList.add('overlay-open');
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('report-evidence') 
+          .upload(filePath, file); // <-- Passing the corrected path variable here
+
+        if (uploadError) throw uploadError;
+
+        // Retrieve the public URL matching our bucket folder layout
+        const { data: urlData } = supabase.storage
+          .from('report-evidence') 
+          .getPublicUrl(filePath);
+
+        publicPhotoUrl = urlData.publicUrl;
+        console.log('Image upload complete. Public URL assigned:', publicPhotoUrl);
+      }
+
+      /* --- 2. DATABASE REWRITE ROW INSERT --- */
+      console.log('Inserting data record into Supabase reports table...');
+      
+      const { data: insertData, error: insertError } = await supabase
+        .from('reports')
+        .insert([
+          {
+            category: categoryValue,
+            subject: subject,
+            image_url: publicPhotoUrl, // Fixed mapping to match column exactly
+            contact: 'N/A',      // Fixed fallback column string values
+            name: 'Anonymous'          // Fixed default placeholder variables
+          }
+        ]);
+
+      if (insertError) throw insertError;
+
+      console.log('Transaction logged! Firing delayed timing sequence...');
       submitBtn.innerText = 'Submitted';
-      return;
+
+      /* --- 3. TIMEOUT DELAYS --- */
+      setTimeout(() => {
+        if (successOverlay) {
+          successOverlay.classList.add('visible');
+          document.body.classList.add('overlay-open');
+          console.log('Success state overlay active.');
+        }
+
+        setTimeout(() => {
+          canCloseOverlay = true;
+          console.log('Overlay dismissal unlocked.');
+        }, 5000);
+
+      }, 5000);
+
+    } catch (err) {
+      console.error('SUPABASE TRANSACTION EXCEPTION:', err);
+      alert('Could not submit report: ' + err.message);
+      submitBtn.innerText = 'Submit Report';
+      submitBtn.disabled = false;
     }
-
-    // If not 201, check if the response is actually JSON
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-      const errorData = await response.json();
-      alert('Server Error: ' + (errorData.error || 'Check server logs'));
-    } else {
-      // This catches 404/500 HTML error pages
-      alert(`Server Error: ${response.status}. Ensure server.js has the POST route.`);
-    }
-
-  } catch (error) {
-    console.error('CONNECTION FAILED:', error);
-    alert('Could not connect to the server.');
-  } finally {
-    /* --- THIS ALWAYS RUNS --- */
-    // Remove the spinner and re-enable the button
-    submitBtn.innerHTML = 'Submit Report'; 
-    submitBtn.disabled = false;
-  }
-});
-
+  });
+}
 
 /* =============================================
-   CLOSE OVERLAY & RESET FORM
+   CLOSE OVERLAY AND CLEAN RESET CONTEXT
 ============================================= */
-successOverlay.addEventListener('click', (e) => {
-  if (e.target === successOverlay) {
-    // 1. Hide the overlay
-    successOverlay.classList.remove('visible');
-    document.body.classList.remove('overlay-open');
+if (successOverlay) {
+  successOverlay.addEventListener('click', (e) => {
+    if (e.target === successOverlay) {
+      if (!canCloseOverlay) {
+        console.log('Action blocked: Reading delay rules enforced.');
+        return;
+      }
 
-    // 2. RESET THE FORM DATA
-    const reportForm = document.querySelector('form');
-    if (reportForm) reportForm.reset();
+      successOverlay.classList.remove('visible');
+      document.body.classList.remove('overlay-open');
 
-    // 3. RESET CATEGORY CHIPS
-    chips.forEach(c => c.classList.remove('selected'));
+      const reportForm = document.getElementById('reportForm');
+      if (reportForm) reportForm.reset();
 
-    // 4. RESET FILE UPLOAD UI (The fix for your "disappearing" button)
-    if (fileInput) fileInput.value = ''; // Clear the actual file data
-    
-    if (uploadPreview) {
-      uploadPreview.classList.remove('visible'); // Hide the checkmark/preview
+      chips.forEach(c => c.classList.remove('selected'));
+      if (fileInput) fileInput.value = '';
+      if (uploadPreview) uploadPreview.classList.remove('visible');
+      if (fileName) fileName.textContent = 'photo.jpg';
+
+      if (uploadBtnEl) uploadBtnEl.classList.remove('hidden');
+      if (sectionHintEl && sectionHintEl.classList.contains('section-hint')) {
+        sectionHintEl.classList.remove('hidden');
+      }
+
+      if (submitBtn) {
+        submitBtn.innerText = 'Submit Report';
+        submitBtn.disabled = false;
+      }
+      
+      canCloseOverlay = false;
     }
+  });
+}
 
-    if (uploadBtn) {
-      uploadBtn.style.display = 'flex'; // BRING THE BUTTON BACK
-    }
-
-    if (fileName) {
-      fileName.innerText = 'No file chosen';
-    }
-
-    // 5. RESET SUBMIT BUTTON
-    submitBtn.innerHTML = 'Submit Report';
-    submitBtn.disabled = false;
-  }
-});
+if (subjectInput) {
+  subjectInput.addEventListener('input', () => {
+    subjectInput.style.boxShadow = '';
+  });
+}
