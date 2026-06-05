@@ -360,44 +360,84 @@ button { cursor: pointer; background: none; border: none; color: inherit; font-f
   border-color: rgba(255, 107, 107, 0.3);
 }
 
+/* ── FIXED HIGH-CONTRAST STATUS BADGES ── */
 .status-badge {
-  padding: 3px 8px;
+  display: inline-block;
+  padding: 4px 10px;
   border-radius: 6px;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid transparent;
 }
-.status-badge--resolved   { background: rgba(117,145,57,0.15); color: var(--status-resolved); }
-.status-badge--unresolved { background: rgba(255,107,107,0.1); color: var(--status-unresolved); }
-.status-badge--pending    { background: rgba(255,179,71,0.1);  color: var(--status-pending); }
+
+/* Pending: Bright Orange Outline/Glow */
+.status-badge--pending { 
+  background: rgba(255, 179, 71, 0.12);  
+  color: #ffb347; 
+  border-color: rgba(255, 179, 71, 0.3);
+}
+
+/* On Hold: Darker Muted White / Charcoal Metallic Style */
+.status-badge--on-hold { 
+  background: rgba(255, 255, 255, 0.06);  
+  color: #b0b3b8; 
+  border-color: rgba(255, 255, 255, 0.2);
+  text-shadow: none;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Resolved: Vibrant Lime Green Outline/Glow */
+.status-badge--resolved { 
+  background: rgba(158, 220, 100, 0.12); 
+  color: #a7e053; 
+  border-color: rgba(158, 220, 100, 0.3);
+}
+
+/* Declined: Crisp Soft Red Outline/Glow */
+.status-badge--declined { 
+  background: rgba(255, 107, 107, 0.12); 
+  color: #ff6b6b; 
+  border-color: rgba(255, 107, 107, 0.3);
+}
+
+
 
 .category-text { font-weight: 700; font-size: 13px; }
 
-/* ── VIEW DETAILS BUTTON ─────────────────────── */
+/* ── HIGHLIGHT SOLID SUMMARY GRID DETAILS BUTTON ── */
 .view-btn {
-  background: rgba(117, 145, 57, 0.1);
-  color: var(--green-bright);
-  border: 1px solid var(--panel-border);
-  padding: 6px 16px;
-  border-radius: 6px;
+  background: var(--green-bright);
+  color: #ffffff;
+  border: 1.5px solid var(--green-bright);
+  padding: 6px 18px;
+  border-radius: 20px;
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   cursor: pointer;
-  transition: all 0.2s var(--ease);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
+  display: inline-block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
 }
+
+/* Smooth, clean hover effect without radical color shifts */
 .view-btn:hover {
-  background: var(--green-bright);
-  color: #1e2a0a;
-  box-shadow: 0 0 12px rgba(117,145,57,0.4);
+  background: var(--green-bright); /* Keeps the solid highlight background color */
+  border-color: var(--green-bright);
+  filter: brightness(1.12); /* Slightly lifts the green hue to show interactivity */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35); /* Tightens the elevation shadow */
   transform: translateY(-1px);
 }
-.view-btn:active { transform: translateY(0); }
+
+.view-btn:active {
+  transform: translateY(0);
+  filter: brightness(0.95);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
 
 /* ── MODAL ───────────────────────────────────── */
 .modal-overlay {
@@ -564,4 +604,34 @@ button { cursor: pointer; background: none; border: none; color: inherit; font-f
   .report-table tr { display: block; margin-bottom: 12px; background: rgba(89,113,45,0.5); border-radius: 10px; padding: 10px; border: 1px solid var(--panel-border); }
   .report-table td { display: block; text-align: left; padding: 4px 0; border: none; }
   .report-table td::before { content: attr(data-label) ': '; font-weight: 700; color: var(--text-muted); }
+}
+
+/* ── ADDITIONAL STATUS WORKFLOW BUTTON THEMES ── */
+.hold-btn {
+  background: rgba(255, 179, 71, 0.08);
+  color: var(--status-pending);
+  border-color: rgba(255, 179, 71, 0.3);
+}
+.hold-btn:hover {
+  background: var(--status-pending);
+  color: #1e2a0a;
+}
+
+.continue-btn {
+  background: rgba(52, 152, 219, 0.08);
+  color: #3498db;
+  border-color: rgba(52, 152, 219, 0.3);
+}
+.continue-btn:hover {
+  background: #3498db;
+  color: #ffffff;
+}
+
+.status-locked {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }

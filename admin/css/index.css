@@ -342,14 +342,46 @@ button { cursor: pointer; background: none; border: none; color: inherit; font-f
   text-overflow: ellipsis;
 }
 
-/* ── STATUS BADGES ───────────────────────────── */
+/* ── FIXED HIGH-CONTRAST STATUS BADGES (MATCHES REPORTS) ── */
 .status-badge {
-  font-weight: 700;
-  font-size: 13px;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid transparent;
 }
-.status-badge--resolved   { color: var(--status-resolved); }
-.status-badge--unresolved { color: var(--status-unresolved); }
-.status-badge--pending    { color: var(--status-pending); }
+
+/* Pending: Bright Orange Outline/Glow */
+.status-badge--pending { 
+  background: rgba(255, 179, 71, 0.12);  
+  color: #ffb347; 
+  border-color: rgba(255, 179, 71, 0.3);
+}
+
+/* On Hold: Darker Muted White / Charcoal Metallic Style */
+.status-badge--on-hold { 
+  background: rgba(255, 255, 255, 0.06);  
+  color: #b0b3b8; 
+  border-color: rgba(255, 255, 255, 0.2);
+  text-shadow: none;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+}
+/* Resolved: Vibrant Lime Green Outline/Glow */
+.status-badge--resolved { 
+  background: rgba(158, 220, 100, 0.12); 
+  color: #a7e053; 
+  border-color: rgba(158, 220, 100, 0.3);
+}
+
+/* Declined: Crisp Soft Red Outline/Glow */
+.status-badge--declined { 
+  background: rgba(255, 107, 107, 0.12); 
+  color: #ff6b6b; 
+  border-color: rgba(255, 107, 107, 0.3);
+}
 
 /* ── RESPONSIVE UPDATES ──────────────────────── */
 @media (max-width: 1200px) {
