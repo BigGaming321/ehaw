@@ -3,29 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>E-HAW Panel — Accounts</title>
+  <title>E-HAW Panel — Authorized Accounts</title>
   <link rel="stylesheet" href="css/accounts.css" />
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
-  <!-- ═══════════════ SIDEBAR ═══════════════ -->
   <aside class="sidebar" role="navigation" aria-label="Main Navigation">
-
     <a href="home.html" class="sidebar__logo" title="E-HAW Panel Home" style="display: flex;">
       <img src="images/7.png" alt="E-HAW Logo" class="logo-icon" />
     </a>
 
     <nav class="sidebar__nav">
-
-      <!-- Home -->
       <a href="index.html" class="sidebar__nav-item" aria-label="Home" title="Home">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/>
         </svg>
       </a>
 
-      <!-- Reports -->
       <a href="reports.html" class="sidebar__nav-item" aria-label="Reports" title="Reports">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect x="4" y="3" width="12" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
@@ -35,7 +30,6 @@
         </svg>
       </a>
 
-      <!-- Accounts (active) -->
       <a href="accounts.html" class="sidebar__nav-item active" aria-label="Accounts" title="Accounts">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="8" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
@@ -43,14 +37,13 @@
           <path d="M17 14L19 16L23 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
-      <!-- Verification Queue -->
+
       <a href="queue.html" class="sidebar__nav-item" aria-label="Verification Queue" title="Verification Queue">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M9 11L12 14L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C13.3956 3 14.7169 3.32271 15.8907 3.89648" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
       </a>
-
     </nav>
 
     <div class="sidebar__footer">
@@ -64,20 +57,16 @@
     </div>
   </aside>
 
-  <!-- ═══════════════ MAIN WRAPPER ═══════════════ -->
   <div class="main-wrapper">
-
     <div class="bg-overlay" aria-hidden="true"></div>
 
-    <!-- TOP NAVBAR -->
     <header class="topbar" role="banner">
       <a href="index.html" class="topbar__brand" aria-label="Go to E-HAW homepage">
         <span class="topbar__brand-text">E-HAW PANEL</span>
       </a>
 
-      <div class="topbar__user" id="userMenu" role="button" tabindex="0"
-           aria-haspopup="true" aria-expanded="false" aria-label="User menu">
-        <span class="topbar__username">Hi! <strong>JuneGooner67</strong></span>
+      <div class="topbar__user" id="userMenu" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="User menu">
+        <span class="topbar__username">Hi! <strong id="activeUsername">Loading...</strong></span>
         <div class="topbar__avatar" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
@@ -97,46 +86,57 @@
       </div>
     </header>
 
-    <!-- CONTENT -->
     <main class="content" role="main">
-
       <section class="section" aria-labelledby="accounts-heading">
         <div class="section__header">
           <h2 class="section__title" id="accounts-heading">
-            Account List
+            Manage Accounts
             <svg class="section__title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                  aria-hidden="true" style="width:18px;height:18px;color:var(--text-muted)">
               <path d="M3 6H21M3 12H15M3 18H9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               <path d="M17 9l4 3-4 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </h2>
-          <button class="section__action-btn" title="Export" aria-label="Export account list">
+          
+          <!--<button class="section__action-btn" title="Export" aria-label="Invert listing order">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <polyline points="7 10 12 15 17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
-          </button>
+          </button> -->
         </div>
 
         <div class="table-card" role="region" aria-label="Account Table">
-          <table class="report-table" aria-label="List of user accounts">
+          <table class="report-table" aria-label="List of database administration accounts">
             <thead>
               <tr>
-                <th scope="col">Username</th>
+                <th scope="col">Name</th>
                 <th scope="col">Email</th>
-                <th scope="col">No. of Reports</th>
+                <th scope="col">Clearance Role</th>
               </tr>
             </thead>
             <tbody id="accountTableBody">
-              <!-- Populated by JS -->
-            </tbody>
+              </tbody>
           </table>
         </div>
       </section>
-
     </main>
   </div>
+  <div id="roleModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3 id="modalUserTitle">Manage Permissions</h3>
+      <p id="modalPermissions"></p>
+      <button id="roleActionBtn" class="action-btn"></button>
+      <button class="modal-close-btn" onclick="document.getElementById('roleModal').style.display='none'">
+        Close Window
+      </button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="../js/config.js"></script>
 
   <script src="js/accounts.js"></script>
 </body>
