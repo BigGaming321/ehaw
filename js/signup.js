@@ -1,7 +1,10 @@
 /* js/signup.js */
-/* =============================================
-   JAVASCRIPT — Form Validation & Interactions
-============================================= */
+/* ==========================================================================
+   JAVASCRIPT — Unified Serverless Account Registration Handler
+========================================================================== */
+
+'use strict';
+
 const signupBtn = document.getElementById('signupBtn');
 const username  = document.getElementById('username');
 const email     = document.getElementById('email');
@@ -10,55 +13,82 @@ const confirmPw = document.getElementById('confirmPassword');
 
 function shake(el) {
   el.style.animation = 'none';
-  el.getBoundingClientRect(); // reflow
+  el.getBoundingClientRect(); // trigger DOM reflow
   el.style.animation = 'shake .35s ease';
 }
-
-/* add shake keyframes once */
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes shake {
-    0%,100%{ transform:translateX(0) }
-    20%    { transform:translateX(-6px) }
-    40%    { transform:translateX(6px) }
-    60%    { transform:translateX(-4px) }
-    80%    { transform:translateX(4px) }
-  }
-`;
-document.head.appendChild(style);
 
 function setError(input, msg) {
   input.style.boxShadow = '0 0 0 3px rgba(220,60,60,.30)';
   input.title = msg;
 }
+
 function clearError(input) {
   input.style.boxShadow = '';
   input.title = '';
 }
 
-[username, email, password, confirmPw].forEach(inp => {
-  inp.addEventListener('input', () => clearError(inp));
-});
+if (signupBtn) {
+  signupBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    let valid = true;
 
-signupBtn.addEventListener('click', () => {
-  let valid = true;
+    // 1. Structural Form Input Validation checks
+    if (!username.value.trim()) {
+      setError(username, 'Username is required'); 
+      shake(username.closest('.input-wrapper')); 
+      valid = false;
+    }
+    if (!email.value.includes('@')) {
+      setError(email, 'Enter a valid email'); 
+      shake(email.closest('.input-wrapper')); 
+      valid = false;
+    }
+    if (password.value.length < 8) {
+      setError(password, 'Password must be at least 8 characters long'); 
+      shake(password.closest('.input-wrapper')); 
+      valid = false;
+    }
+    if (password.value !== confirmPw.value) {
+      setError(confirmPw, 'Passwords do not match'); 
+      shake(confirmPw.closest('.input-wrapper')); 
+      valid = false;
+    }
 
-  if (!username.value.trim()) {
-    setError(username, 'Username is required'); shake(username.closest('.input-wrapper')); valid = false;
-  }
-  if (!email.value.includes('@')) {
-    setError(email, 'Enter a valid email'); shake(email.closest('.input-wrapper')); valid = false;
-  }
-  if (password.value.length < 6) {
-    setError(password, 'Password must be at least 6 characters'); shake(password.closest('.input-wrapper')); valid = false;
-  }
-  if (confirmPw.value !== password.value) {
-    setError(confirmPw, 'Passwords do not match'); shake(confirmPw.closest('.input-wrapper')); valid = false;
-  }
+    /* ==========================================================================
+    UPDATED LIFECYCLE FOR SIGNUP (REPLACE THE LOWER HALF OF YOUR FILE)
+    ========================================================================== */
+    if (!valid) return;
 
-  if (valid) {
-    signupBtn.textContent = '✓ Account Created!';
-    signupBtn.style.background = '#2e7d5e';
+    // Change button state to show loading status
+    signupBtn.textContent = 'Sending Verification...';
     signupBtn.disabled = true;
-  }
-});
+
+    try {
+      // Register the account directly with Supabase Auth
+      const { data, error } = await window.supabaseClient.auth.signUp({
+        email: email.value.trim(),
+        password: password.value,
+        options: {
+          data: { 
+            name: username.value.trim() // The trigger handles pulling your email automatically now!
+          },
+          emailRedirectTo: window.location.origin + '/login.html'
+        }
+      });
+
+      if (error) throw error;
+
+      // Direct the user to verify their account link
+      alert('Registration initiated! A verification link has been sent to your email address. Please check your inbox and click the link to confirm your account before logging in.');
+      window.location.href = 'login.html';
+
+    } catch (err) {
+      console.error('Registration failed:', err.message);
+      alert('Sign Up Error: ' + err.message);
+      
+      // Restore original interaction button states
+      signupBtn.textContent = 'Sign Up';
+      signupBtn.disabled = false;
+    }
+  });
+}
