@@ -148,16 +148,17 @@ document.head.appendChild(shakeStyle);
 /* ============================================================
    FORM SUBMISSION (REPLACED PART: DIRECT TO SUPABASE VIA SDK)
    ============================================================ */
+/* --- NEW: Trigger Modal instead of immediate upload --- */
 if (submitBtn) {
-  submitBtn.addEventListener('click', async (e) => {
+  submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
 
+    // 1. Keep your exact validation logic
     const selected = document.querySelector('.chip.selected');
     const subject = subjectInput ? subjectInput.value.trim() : '';
     let valid = true;
 
-    /* --- CHIP BOX VALIDATION --- */
     const categoryBox = document.getElementById('categoryChips');
     if (!selected && categoryBox) {
       categoryBox.style.outline = '2px solid rgba(220,60,60,.4)';
@@ -168,7 +169,6 @@ if (submitBtn) {
       categoryBox.style.outline = '';
     }
 
-    /* --- TEXT AREA VALIDATION --- */
     if (!subject && subjectInput) {
       subjectInput.style.boxShadow = '0 0 0 3px rgba(220,60,60,.30)';
       shake(subjectInput);
@@ -179,91 +179,92 @@ if (submitBtn) {
 
     if (!valid) return;
 
-    // Read attributes directly from the dynamic HTML dataset layer
-    const categoryValue = selected.getAttribute('data-cat') || selected.dataset.cat || 'Others';
-
-    submitBtn.innerText = 'Uploading...';
-    submitBtn.disabled = true;
-
-    try {
-      const supabase = window.supabaseClient;
-      if (!supabase) {
-        throw new Error('Supabase client was not initialized properly. Check config.js initialization.');
-      }
-
-      let publicPhotoUrl = null;
-
-      /* --- 1. STORAGE BUCKET TRANSACTION (FIXED STORAGE PATH) --- */
-      if (fileInput && fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        const fileExt = file.name.split('.').pop();
-        
-        // Form the clean, random, non-clashing unique string name
-        const uniqueFileName = `${Date.now()}-${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
-        
-        // FIXED: Prepended 'public/' to match your storage folder policy constraint exactly!
-        const filePath = `public/${uniqueFileName}`; 
-
-        console.log('Uploading image stream to bucket:', filePath);
-
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('report-evidence') 
-          .upload(filePath, file); // <-- Passing the corrected path variable here
-
-        if (uploadError) throw uploadError;
-
-        // Retrieve the public URL matching our bucket folder layout
-        const { data: urlData } = supabase.storage
-          .from('report-evidence') 
-          .getPublicUrl(filePath);
-
-        publicPhotoUrl = urlData.publicUrl;
-        console.log('Image upload complete. Public URL assigned:', publicPhotoUrl);
-      }
-
-      /* --- 2. DATABASE REWRITE ROW INSERT --- */
-      console.log('Inserting data record into Supabase reports table...');
-      
-      const { data: insertData, error: insertError } = await supabase
-        .from('reports')
-        .insert([
-          {
-            category: categoryValue,
-            subject: subject,
-            image_url: publicPhotoUrl, // Fixed mapping to match column exactly
-            contact: 'N/A',      // Fixed fallback column string values
-            name: 'Anonymous'          // Fixed default placeholder variables
-          }
-        ]);
-
-      if (insertError) throw insertError;
-
-      console.log('Transaction logged! Firing delayed timing sequence...');
-      submitBtn.innerText = 'Submitted';
-
-      /* --- 3. TIMEOUT DELAYS --- */
-      setTimeout(() => {
-        if (successOverlay) {
-          successOverlay.classList.add('visible');
-          document.body.classList.add('overlay-open');
-          console.log('Success state overlay active.');
-        }
-
-        setTimeout(() => {
-          canCloseOverlay = true;
-          console.log('Overlay dismissal unlocked.');
-        }, 5000);
-
-      }, 5000);
-
-    } catch (err) {
-      console.error('SUPABASE TRANSACTION EXCEPTION:', err);
-      alert('Could not submit report: ' + err.message);
-      submitBtn.innerText = 'Submit Report';
-      submitBtn.disabled = false;
+    // 2. Instead of uploading, show the pop-up modal
+    const confirmOverlay = document.getElementById('confirmOverlay');
+    if (confirmOverlay) {
+      confirmOverlay.classList.add('visible');
     }
   });
 }
+
+/* --- NEW: Logic to handle user choice --- */
+async function performSubmit(isAnonymous) {
+  const confirmOverlay = document.getElementById('confirmOverlay');
+  confirmOverlay.classList.remove('visible');
+
+  submitBtn.innerText = 'Uploading...';
+  submitBtn.disabled = true;
+
+  // Set defaults
+  let contact = 'N/A';
+  let name = 'Anonymous';
+
+  // If they choose to share info, fetch from 'accounts'
+  if (!isAnonymous) {
+    try {
+      const { data: { user } } = await window.supabaseClient.auth.getUser();
+      if (user) {
+        const { data: profile } = await window.supabaseClient
+          .from('accounts')
+          .select('name')
+          .eq('email', user.email)
+          .single();
+        
+        contact = user.email; // Map to contact column
+        name = profile?.name || 'User';
+      }
+    } catch (err) {
+      console.error("Auth fetch error:", err);
+    }
+  }
+
+  // --- Proceed with your original Supabase logic ---
+  try {
+    const supabase = window.supabaseClient;
+    const selected = document.querySelector('.chip.selected');
+    const categoryValue = selected.getAttribute('data-cat') || selected.dataset.cat || 'Others';
+    let publicPhotoUrl = null;
+
+    if (fileInput && fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const filePath = `public/${Date.now()}-${Math.random().toString(36).substring(2, 7)}.${file.name.split('.').pop()}`;
+      
+      const { error: uploadError } = await supabase.storage.from('report-evidence').upload(filePath, file);
+      if (uploadError) throw uploadError;
+      
+      publicPhotoUrl = supabase.storage.from('report-evidence').getPublicUrl(filePath).data.publicUrl;
+    }
+
+    const { error: insertError } = await supabase
+      .from('reports')
+      .insert([{
+        category: categoryValue,
+        subject: subjectInput.value.trim(),
+        image_url: publicPhotoUrl,
+        contact: contact, // Dynamically set
+        name: name        // Dynamically set
+      }]);
+
+    if (insertError) throw insertError;
+
+    submitBtn.innerText = 'Submitted';
+    setTimeout(() => {
+      if (successOverlay) {
+        successOverlay.classList.add('visible');
+        document.body.classList.add('overlay-open');
+      }
+    }, 1000);
+
+  } catch (err) {
+    alert('Could not submit: ' + err.message);
+    submitBtn.innerText = 'Submit Report';
+    submitBtn.disabled = false;
+  }
+}
+
+// Hook up the buttons in your modal
+document.getElementById('shareBtn').addEventListener('click', () => performSubmit(false));
+document.getElementById('anonBtn').addEventListener('click', () => performSubmit(true));
 
 /* =============================================
    CLOSE OVERLAY AND CLEAN RESET CONTEXT
