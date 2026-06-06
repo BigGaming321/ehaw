@@ -206,11 +206,12 @@ button { cursor: pointer; background: none; border: none; color: inherit; font-f
 
 /* ── CONTENT ─────────────────────────────────── */
 .content {
-  position: relative; z-index: 5;
-  flex: 1; overflow-y: auto;
-  padding: 22px 24px 28px 22px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(117,145,57,0.35) transparent;
+  padding: 32px 24px;
+  flex: 1;
+  max-width: 950px;   /* Forces the whole workspace container bounds tight */
+  width: 100%;
+  margin: 0 auto;     /* Perfectly dead-centers the title + table block on screen */
+  box-sizing: border-box;
 }
 .content::-webkit-scrollbar { width: 5px; }
 .content::-webkit-scrollbar-thumb { background: rgba(117,145,57,0.35); border-radius: 4px; }
@@ -223,9 +224,12 @@ button { cursor: pointer; background: none; border: none; color: inherit; font-f
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.section__header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 10px; padding: 0 2px;
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px; /* Reduced margin to bring text closer to the entries table */
+  padding: 0 4px;      /* Slight padding to keep it aligned with the table borders */
 }
 .section__title {
   font-family: 'Rajdhani', sans-serif;
@@ -247,11 +251,16 @@ button { cursor: pointer; background: none; border: none; color: inherit; font-f
 .section__action-btn:hover { background: rgba(117,145,57,0.15); color: var(--green-bright); transform: translateY(-1px); }
 
 /* ── TABLE CARD ──────────────────────────────── */
+/* Locate your .table-card rule and replace it with this packed layout */
 .table-card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 16px; overflow: hidden;
-  box-shadow: 0 6px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(117,145,57,0.15);
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin: 20px auto; /* Centers the card layout on screen */
+  max-width: 950px;   /* Squishes the width so it doesn't stretch infinitely */
+  width: 100%;
 }
 
 /* ── REPORT TABLE (used in accounts.html) ────── */
@@ -278,10 +287,20 @@ button { cursor: pointer; background: none; border: none; color: inherit; font-f
   white-space: nowrap;
 }
 
-/* Column widths for accounts table */
-.report-table th:nth-child(1) { width: 30%; } /* Username */
-.report-table th:nth-child(2) { width: 45%; } /* Email */
-.report-table th:nth-child(3) { width: 25%; } /* No. of Reports */
+/* Explicit compact column widths */
+.report-table th:nth-child(1), .report-table td:nth-child(1) { 
+  width: 30%; 
+} /* Name */
+
+.report-table th:nth-child(2), .report-table td:nth-child(2) { 
+  width: 50%; 
+} /* Email Address has plenty of room */
+
+.report-table th:nth-child(3), .report-table td:nth-child(3) { 
+  width: 20%; 
+  text-align: right !important; /* Right aligned text feels cleaner when tight */
+  padding-right: 24px;         /* Adds a clean safety margin on the right boundary edge */
+} /* Clearance Role Badge Column */
 
 .report-table tbody tr {
   border-bottom: 1px solid rgba(117,145,57,0.15);
@@ -292,12 +311,14 @@ button { cursor: pointer; background: none; border: none; color: inherit; font-f
 .report-table tbody tr:hover { background: rgba(117,145,57,0.12); }
 
 .report-table td {
-  padding: 11px 18px;
-  color: var(--text-dark);
-  font-weight: 500;
-  white-space: nowrap;
+  padding: 16px 14px; /* Increased top/bottom padding from 8px to 16px */
+  color: var(--text-primary);
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 13.5px;
+  vertical-align: middle;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ── REPORT COUNT BADGE ──────────────────────── */
@@ -314,4 +335,149 @@ button { cursor: pointer; background: none; border: none; color: inherit; font-f
   font-size: 14px;
   font-weight: 700;
   color: #3a4f1a;;
+}
+
+/* ==========================================================================
+   UNIFIED STATUS PILLS (Brings complete visual consistency with reports.css)
+   ========================================================================== */
+
+/* Modern Monochromatic Button Styling */
+.status-pill {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  text-align: center;
+  min-width: 90px;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s ease;
+}
+
+.status-pill:hover {
+  opacity: 0.85;
+}
+
+/* Admin: Flat Bold Black (Authoritative) */
+.status-pill--admin {
+  background-color: #000000 !important; 
+  color: #ffffff !important;
+}
+
+/* User: Flat Bold White (Operational) */
+.status-pill--user {
+  background-color: #ffffff !important; 
+  color: #000000 !important;
+}
+
+
+/* ============================================================
+   ROLE MANAGEMENT MODAL - Overlay & Content
+   ============================================================ */
+
+/* 1. The dark background overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 9999;
+  display: none; /* Controlled by JS */
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  padding: 30px;
+  width: 320px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid var(--card-border);
+}
+
+/* 3. Modal Text & Title */
+.modal-content h3 {
+  font-family: 'Rajdhani', sans-serif;
+  margin-bottom: 15px;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.modal-content p {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  margin-bottom: 25px;
+  color: var(--text-muted);
+}
+
+/* 4. Action Buttons */
+.action-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+
+.action-btn:hover { opacity: 0.9; }
+
+.demote { background: #ff6b6b; color: white; }
+.promote { background: #759139; color: white; }
+
+/* 5. Close Button (Simple text style) */
+.modal-content button:last-child {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  margin-top: 15px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+/* Styling the Close Button to have a solid look */
+.modal-close-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  
+  /* Solid Fill Style */
+  background-color: rgba(255, 255, 255, 0.1); /* Darker solid-ish base */
+  color: #ffffff;
+  border: 1px solid var(--text-muted);
+  border-radius: 6px;
+  
+  /* Font & Cursor */
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  
+  /* Smooth Transition */
+  transition: all 0.3s ease;
+}
+
+/* Hover Effect: Changes to a stronger solid color */
+.modal-close-btn:hover {
+  background-color: var(--status-unresolved); /* Using your defined red/error color for visibility */
+  color: #ffffff;
+  border-color: var(--status-unresolved);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
