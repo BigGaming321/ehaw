@@ -114,3 +114,34 @@
   });
 
 })();
+
+/* ── Dynamically Update Username ────────────────────────────── */
+async function loadActiveUser() {
+  const activeUserSpan = document.getElementById('activeUsername');
+  
+  try {
+    // 1. Get current session
+    const { data: { user } } = await window.supabaseClient.auth.getUser();
+    
+    if (user) {
+      // 2. Fetch user name from 'accounts' table based on their email or ID
+      const { data: profile, error } = await window.supabaseClient
+        .from('accounts')
+        .select('name')
+        .eq('email', user.email)
+        .single();
+        
+      if (profile) {
+        activeUserSpan.innerText = profile.name;
+      } else {
+        activeUserSpan.innerText = 'User';
+      }
+    }
+  } catch (err) {
+    console.error("Error loading user profile:", err);
+    activeUserSpan.innerText = 'User';
+  }
+}
+
+// 3. Call this function when the page initializes
+loadActiveUser();

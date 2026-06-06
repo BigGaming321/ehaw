@@ -242,3 +242,57 @@ function animateCountUp() {
 document.addEventListener('DOMContentLoaded', () => {
   loadDashboardData();
 });
+
+/* ── Dynamically Update Username ────────────────────────────── */
+async function loadActiveUser() {
+  const activeUserSpan = document.getElementById('activeUsername');
+  
+  try {
+    // 1. Get current session
+    const { data: { user } } = await window.supabaseClient.auth.getUser();
+    
+    if (user) {
+      // 2. Fetch user name from 'accounts' table based on their email or ID
+      const { data: profile, error } = await window.supabaseClient
+        .from('accounts')
+        .select('name')
+        .eq('email', user.email)
+        .single();
+        
+      if (profile) {
+        activeUserSpan.innerText = profile.name;
+      } else {
+        activeUserSpan.innerText = 'User';
+      }
+    }
+  } catch (err) {
+    console.error("Error loading user profile:", err);
+    activeUserSpan.innerText = 'User';
+  }
+}
+
+// 3. Call this function when the page initializes
+loadActiveUser();
+
+async function handleLogout() {
+  if (confirm('Are you sure you want to logout from E-HAW Panel?')) {
+    try {
+      // Use built-in Auth signOut engine to clear storage tokens securely
+      await window.supabaseClient.auth.signOut();
+    } catch (err) {
+      console.error('Error ending cloud session token context:', err.message);
+    } finally {
+      // Redirect to login.html as requested
+      window.location.href = '../login.html'; 
+    }
+  }
+}
+
+// Ensure listeners are added after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+  const logoutBtn = document.getElementById('logoutBtn');
+  const sidebarLogout = document.getElementById('sidebarLogout');
+  
+  if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+  if (sidebarLogout) sidebarLogout.addEventListener('click', handleLogout);
+});
