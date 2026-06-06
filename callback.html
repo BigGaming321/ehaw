@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Authenticating | E-HAW</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Nunito', sans-serif;
+      background: #e3f3d8;
+      color: #596d2d;
+      text-align: center;
+    }
+    .logo-placeholder {
+      margin-bottom: 30px;
+      opacity: 0.8;
+    }
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 6px solid #cfeec5;
+      border-bottom-color: #729045;
+      border-radius: 50%;
+      animation: rotation 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    h2 {
+        font-size: 2.5rem; /* Makes the text significantly larger */
+        font-weight: 900;  /* Makes the text extra bold */
+        color: #596d2d;
+        margin: 0;
+        letter-spacing: -0.5px; /* Tightens the look for a modern feel */
+    }
+
+    p {
+        font-size: 1.2rem; /* Increases size of sub-text */
+        font-weight: 600;  /* Adds weight to sub-text */
+        color: #729045;
+        margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <p>Authenticating...</p>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js"></script>
+  <script>
+    async function handleCallback() {
+      // 1. Get the session from the URL hash
+      const { data, error } = await window.supabaseClient.auth.getSession();
+      
+      if (error || !data.session) {
+        window.location.href = '../login.html';
+        return;
+      }
+
+      // 2. Fetch the user's role from your 'accounts' table
+      const { data: profile } = await window.supabaseClient
+        .from('accounts')
+        .select('role')
+        .eq('id', data.session.user.id)
+        .single();
+
+      // 3. Role-based redirect
+      if (profile && profile.role === 'Admin') {
+        window.location.href = '../admin/home.html';
+      } else {
+        window.location.href = '../index.html';
+      }
+    }
+    handleCallback();
+  </script>
+</body>
+</html>
