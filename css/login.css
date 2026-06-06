@@ -1,0 +1,396 @@
+/* css/login.css */
+/* =============================================
+   CSS VARIABLES & RESET
+============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green-dark:    #596d2d;
+  --green-mid:     #729045;
+  --green-btn:     #729045;
+  --green-light:   #cfeec5;
+  --green-pale:    #e3f3d8;
+  --green-bg:      #689138;
+  --green-sheet:   #e3f3d8;
+  --text-dark:     #596d2d;
+  --text-muted:    #6b7c3f;
+  --text-body:     #596d2d;
+  --white:         #ffffff;
+  --radius-input:  50px;
+  --radius-card:   32px;
+  --font-main:     'Inter', sans-serif;
+  --font-body:     'Inter', sans-serif;
+  --font-display:  'Inter', sans-serif;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: var(--font-main);
+  background: var(--green-pale);
+  overflow-x: hidden;
+}
+
+/* =============================================
+   PAGE WRAPPER
+============================================= */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+
+/* =============================================
+   HERO / BACKGROUND IMAGE
+============================================= */
+.hero {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  z-index: 0;
+}
+
+.hero img.bg-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  display: block;
+}
+
+/* dark overlay */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(223, 244, 213, 0.79);
+  pointer-events: none;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--green-dark);
+  font-size: .95rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 28px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.back-link:hover { opacity: .7; }
+.back-link svg { flex-shrink: 0; }
+
+@media (max-width: 539px) {
+  .hero img.bg-photo {
+    object-position: center top;
+  }
+}
+
+
+/* =============================================
+   HERO LOGO CONTENT
+============================================= */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  padding: 48px 24px 28px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero-subtitle {
+  font-family: var(--font-main);
+  font-size: clamp(10px, 1.5vw, 14px);
+  font-weight: 900;
+  color: var(--green-dark);
+  margin-top: -25px;
+  letter-spacing: 0;
+  text-shadow: 0 1px 12px rgba(255,255,255,.65);
+  animation: fadeDown .7s .08s cubic-bezier(.22,.8,.32,1) both;
+}
+
+.hero-logo {
+  width: min(88vw, 520px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 26px rgba(89,109,45,.18));
+  animation: fadeDown .6s cubic-bezier(.22,.8,.32,1) both;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.logo-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 350px;
+  height: 350px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.75) 45%,
+    rgba(255, 255, 255, 0.35) 65%,
+    rgba(255, 255, 255, 0) 85%
+  );
+
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+/* =============================================
+   CARD SHEET
+============================================= */
+.card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  background: var(--green-sheet);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  padding: 40px 32px 40px;
+  box-shadow: 0 -8px 48px rgba(0,0,0,.20);
+  animation: slideUp .5s .1s cubic-bezier(.22,.8,.32,1) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================
+   HEADING
+============================================= */
+.card h1 {
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  font-weight: 900;
+  color: var(--green-dark);
+  line-height: 1.05;
+  margin-bottom: 32px;
+  letter-spacing: -.5px;
+}
+
+/* =============================================
+   FORM
+============================================= */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 20px;
+  color: #759139;
+  pointer-events: none;
+  transition: color .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.input-wrapper:focus-within .input-icon {
+  color: var(--green-mid);
+}
+
+.login-form input {
+  width: 100%;
+  padding: 18px 20px 18px 52px;
+  border: none;
+  border-radius: var(--radius-input);
+  background: rgba(255,255,255,.78);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  outline: none;
+  transition: background .2s, box-shadow .2s;
+  box-shadow: 0 2px 8px rgba(89,109,45,.06);
+  -webkit-appearance: none;
+}
+
+.login-form input::placeholder {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.login-form input:focus {
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(114,144,69,.25), 0 2px 8px rgba(89,109,45,.08);
+}
+
+/* =============================================
+   FORGOT PASSWORD
+============================================= */
+.forgot-link {
+  text-align: right;
+  margin-top: 2px;
+}
+
+.forgot-link a {
+  color: var(--green-dark);
+  font-size: .9rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: opacity .2s;
+}
+.forgot-link a:hover { opacity: .7; }
+
+/* =============================================
+   LOGIN BUTTON
+============================================= */
+.btn-login {
+  margin-top: 20px;
+  width: 100%;
+  padding: 20px;
+  border: none;
+  border-radius: var(--radius-input);
+  background: var(--green-btn);
+  color: var(--white);
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: .3px;
+  cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 18px rgba(89,109,45,.35);
+}
+
+.btn-login:hover {
+  background: var(--green-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(89,109,45,.4);
+}
+
+.btn-login:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(89,109,45,.25);
+}
+
+/* =============================================
+   FOOTER NOTE
+============================================= */
+.footer-note {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: .72rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.footer-note a {
+  color: var(--text-muted);
+  font-weight: 700;
+  text-decoration: none;
+}
+.footer-note a:hover { text-decoration: underline; }
+
+/* =============================================
+   RESPONSIVE — TABLET
+============================================= */
+@media (min-width: 540px) {
+  .page {
+    align-items: center;
+  }
+
+  .card {
+    max-width: 520px;
+    border-radius: var(--radius-card);
+    margin: 0 16px 40px;
+    padding: 44px 48px 52px;
+  }
+
+  .hero-content {
+    max-width: 520px;
+    padding-bottom: 24px;
+  }
+}
+
+@media (max-width: 539px) {
+  .hero img.bg-photo {
+    object-position: center top;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — DESKTOP
+============================================= */
+@media (min-width: 960px) {
+  .page {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  /* left panel: hero logo */
+  .hero-content {
+    flex: 1;
+    max-width: none;
+    justify-content: center;
+    padding: 60px 60px 60px 80px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero-logo {
+    width: min(52vw, 680px);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(12px, 1.2vw, 16px);
+    margin-top: -40px;
+  }
+
+  /* right panel: card */
+  .card {
+    width: 460px;
+    max-width: 460px;
+    flex-shrink: 0;
+    border-radius: 0;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 52px;
+    box-shadow: -8px 0 40px rgba(0,0,0,.15);
+    overflow-y: auto;
+  }
+
+  .footer-note {
+    margin-top: auto;
+    padding-top: 40px;
+  }
+}
