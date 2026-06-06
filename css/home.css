@@ -260,8 +260,8 @@ html, body {
   left: 50%;
   transform: translate(-50%, -50%);
 
-  width: 850px;
-  height: 850px;
+  width: 1000px;
+  height: 1000px;
 
   border-radius: 50%;
 
@@ -322,11 +322,6 @@ html, body {
 /*MOBILE VIEW*/
 @media (max-width: 640px) {
 
-  .hero,
-  .hero-content {
-    min-height: 60vh;
-  }
-
   .hero-content {
     padding: 32px 16px;
     gap: 8px;
@@ -334,13 +329,13 @@ html, body {
 
   .hero-logo {
     width: 100vw;
-    max-width: 500px;
-    margin-top: -20px;
+    margin-top: -200px;
+    max-width: 500px; 
   }
 
   .hero-content p1 {
     font-size: 0.70rem;
-    margin-top: -30px;
+    margin-top: -30px; 
     line-height: 1.2;
   }
 
@@ -349,17 +344,16 @@ html, body {
     margin-top: 6px;
     line-height: 1.4;
   }
+}
 
-  .hero-overlay::before {
-    top: 42%;
-    width: 400px;
-    height: 400px;
+@media (max-width: 640px) {
+  .hero,
+  .hero-content {
+    min-height: 65vh;
   }
 
-  .hero-bg {
-    transform: scale(1.8);
-    object-fit: cover;
-    object-position: center center;
+  .hero-logo {
+    margin-top: -20px;
   }
 }
 
