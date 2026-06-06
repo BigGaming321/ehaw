@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login – E-HAW | Barangay Kamputhaw</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/login.css" />
 </head>
 <body>
@@ -27,13 +27,7 @@
     <!-- LOGIN CARD -->
     <div class="card">
       <a class="back-link" onclick="history.back()" href="signup.html">
-        <!-- left arrow -->
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-             stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"/>
-        </svg>
-        Back
+        
       </a>
 
       <h1>LOGIN</h1>
@@ -44,10 +38,10 @@
         <div class="input-wrapper">
           <span class="input-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6.62 10.79a15.46 15.46 0 006.59 6.59l2.2-2.2a1 1 0 011-.24 11.4 11.4 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 5a1 1 0 011-1h3.49a1 1 0 011 1 11.4 11.4 0 00.57 3.58 1 1 0 01-.24 1z"/>
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
             </svg>
           </span>
-          <input type="tel" id="contact" placeholder="Contact Number" autocomplete="tel" />
+          <input type="email" id="email" placeholder="Email Address" autocomplete="email" required />
         </div>
 
         <!-- Password -->
@@ -57,7 +51,7 @@
               <path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2v-9a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm-3 8V6a3 3 0 016 0v3H9z"/>
             </svg>
           </span>
-          <input type="password" id="password" placeholder="Password" autocomplete="current-password" />
+          <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
         </div>
 
         <!-- Forgot Password -->
@@ -65,7 +59,8 @@
           <a href="#">Forgot Password?</a>
         </div>
 
-        <button class="btn-login" type="button" id="loginBtn">LOGIN</button>
+        <button type="submit" class="btn-login" id="loginBtn">Log In</button>
+        <p class="signup-link">Don't have an account? <a href="signup.html">Sign Up</a></p>
 
       </div><!-- /.login-form -->
 
@@ -75,6 +70,10 @@
     </div><!-- /.card -->
 
   </div><!-- /.page -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="js/config.js"></script>
 
   <script src="js/login.js"></script>
 </body>
