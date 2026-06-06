@@ -413,3 +413,27 @@ html, body {
   transition: opacity .2s;
 }
 .signup-link a:hover { opacity: .7; }
+
+.btn-google {
+  margin-top: 20px;
+  width: 100%;
+  padding: 18px;
+  border: 1px solid #ddd;
+  border-radius: var(--radius-input);
+  background: var(--white);
+  color: #555;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background .2s, box-shadow .2s;
+}
+
+.btn-google:hover {
+  background: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
