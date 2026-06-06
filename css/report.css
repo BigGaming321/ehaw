@@ -724,3 +724,17 @@ body.overlay-open {
 .image-lightbox.active img {
   transform: scale(1);
 }
+
+.confirm-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  display: none; align-items: center; justify-content: center; z-index: 99999;
+}
+.confirm-overlay.visible { display: flex; }
+.confirm-box {
+  background: white; padding: 32px; border-radius: 20px;
+  width: 90%; max-width: 400px; text-align: center;
+}
+.confirm-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.btn-share, .btn-anon { padding: 14px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; }
+.btn-share { background: var(--green-mid); color: white; }
+.btn-anon { background: #e0e8e4; color: #596d2d; }
