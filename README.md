@@ -1,4 +1,5 @@
-E-HAW – Online Grievance Desk System for Barangay Kamputhaw
+# **E-HAW – Online Grievance Desk System for Barangay Kamputhaw**
+
 
 Project E-HAW (E-System for Harmonizing Actions and Welfare) is developed to bridge this gap by providing a digital platform that prioritizes efficiency, confidentiality, and accountability. Project E-HAW is a web-based reporting system specifically designed for the residents and officials of Barangay Kamputhaw, Cebu City. This platform serves as a digital bridge that allows citizens to report community issues that range from environmental hazards, like illegal dumping, to public safety concerns, such as drug-related activities.
 
